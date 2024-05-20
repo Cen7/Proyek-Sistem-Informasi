@@ -63,6 +63,10 @@ app.get("/admin-pengajuan", (req, res) => {
   res.render("admin-pengajuan");
 });
 
+app.get("/tes", (req, res) => {
+  res.render("tes");
+});
+
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
