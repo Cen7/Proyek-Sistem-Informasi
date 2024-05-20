@@ -1,0 +1,30 @@
+  .menu-multi6,
+  .rectangle-parent5 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+  .menu-multi6 {
+    width: 250px;
+    flex-direction: row;
+    padding: var(--padding-mini) var(--padding-lg);
+    position: relative;
+    cursor: pointer;
+    z-index: 15;
+  }
+  .rectangle-parent5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-darkslategray-100);
+    width: 240px;
+    height: 1080px;
+    flex-direction: column;
+    padding: 0 0 660px;
+    z-index: 7;
+    font-size: var(--base-large-size);
+    color: var(--light-white);
+    font-family: var(--heading-h5-heading);
+  }
+  

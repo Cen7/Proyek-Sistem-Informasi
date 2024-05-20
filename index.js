@@ -55,12 +55,16 @@ app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
+app.get("/tes", (req, res) => {
+  res.render("tes");
+});
+
 app.get("/admin-terverifikasi", (req, res) => {
-  res.render("admin-terverifikasi");
+  res.render("admin-terverifikasi" , { pageTitle: 'Daftar Lapak Terverifikasi' });
 });
 
 app.get("/admin-pengajuan", (req, res) => {
-  res.render("admin-pengajuan");
+  res.render("admin-pengajuan" , { pageTitle: 'Daftar Pengajuan Lapak' });
 });
 
 app.post("/login", (req, res) => {
