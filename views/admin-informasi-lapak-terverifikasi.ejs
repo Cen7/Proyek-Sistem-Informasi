@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Lapak</title>
+    <link rel="stylesheet" href="/css/admin-informasi-lapak-terverifikasi.css">
+</head>
+<body>
+    <%- include('./layout/sidebar.ejs') %>
+    <%- include('./layout/header.ejs') %>
+    <div class="container">
+        <main class="main-content">
+          <section class="lapak-info">
+            <div class="header">
+              <div class="left-header">
+                <p class="nama-lapak"><%= lapak.nama_lapak %></p>
+                <p class="alamat-lapak"><%= lapak.lokasi_lapak %></p>
+              </div>
+              <div class="right-header">
+                <button class="back-button" onclick="location.href='/admin-terverifikasi'">Kembali</button>
+              </div>
+            </div>
+            <div class="lapak-details">
+              <div class="left-column">
+                <h3 class="garis">Tentang Lapak</h3>
+                <p><strong>Nama Lapak</strong></p>
+                <p class="garis"><%= lapak.nama_lapak %></p>
+                <p><strong>Kategori Bisnis</strong></p>
+                <p class="garis"><%= lapak.kategori_lapak %></p>
+                <p><strong>Deskripsi Lapak</strong></p>
+                <p class="deskripsi-lapak"><%= lapak.deskripsi_lapak %></p>
+                
+                <h3 class="garis">Informasi Kontak</h3>
+                <p><strong>No. Telepon</strong></p>
+                <p><%= lapak.nomor_telepon %></p>
+                
+                <h3 class="garis">Lokasi</h3>
+                <p><strong>Lokasi Lapak</strong></p>
+                <p><%= lapak.lokasi_lapak %></p>
+
+                <h3 class="garis">Layanan</h3>
+                <p><%= lapak.layanan %></p>
+              </div>
+              <div class="mid-column">
+                <h3 class="garis">Jam Buka</h3>
+                <ul class="opening-hours">
+                    <% lapak.jam_buka.forEach((jam, index) => { %>
+                    <li><strong><%= jam.hari %></strong></li>
+                    <li><%= jam.jam_buka %> - <%= jam.jam_tutup %></li>
+                    <% }) %>
+                </ul>
+              </div>
+              <div class="right-column">
+                <!-- <h3 class="garis">Foto Lapak</h3>
+                <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo"> -->
+                
+                <h3 class="garis">Laporan</h3>
+                <% laporan.forEach(report => { %>
+                    <div class="report">
+                        <p><img src="/image/Group 60439.png" class="profile-report">
+                            <strong><%= report.nama_lengkap %>:</strong> <%= report.alasan_lapak %></p>
+                        <% if (report.foto) { %>
+                            <img src="data:image/jpeg;base64,<%= report.foto.toString('base64') %>" alt="Report Photo" class="report-image">
+                        <% } %>
+                        <h3 class="garis"></h3>
+                    </div>
+                <% }) %>
+                    <button class="block-button">Blokir Lapak</button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+</body>
+</html>

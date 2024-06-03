@@ -27,4 +27,484 @@
     color: var(--light-white);
     font-family: var(--heading-h5-heading);
   }
+
+  
+  
+  .tabel-footer {
+    position: absolute;
+    top: 630px;
+    /* left: 268px; */
+    width: 1652px;
+    height: 60px;
+    max-width: 100%;
+    text-align: left;
+    font-size: var(--base-body-size);
+    color: var(--color-black);
+    font-family: var(--base-body);
+  }
+  .component-2-icon {
+    position: absolute;
+    top: 100px;
+    left: 1832px;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+  .h4-heading {
+    position: absolute;
+    top: 98px;
+    left: 260px;
+    font-size: var(--base-blockquote-size);
+    line-height: 28px;
+    font-family: var(--heading-h5-heading);
+    color: var(--light-dark);
+    display: inline-block;
+    min-width: 48px;
+  }
+  .admin-panel-child {
+    position: absolute;
+    height: 0.09%;
+    width: 86.04%;
+    top: 14.35%;
+    right: 0;
+    bottom: 85.56%;
+    left: 13.96%;
+    background-color: var(--light-light);
+    border: 1px solid var(--color-whitesmoke-100);
+    box-sizing: border-box;
+    z-index: 6;
+  }
+  .frame-child10,
+  .frame-child9 {
+    align-self: stretch;
+    position: relative;
+  }
+  .frame-child9 {
+    height: 1080px;
+    background-color: var(--color-darkslategray-100);
+    display: none;
+  }
+  .frame-child10 {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.03);
+    z-index: 8;
+  }
+  .menu-multi-child {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .dashboard {
+    position: relative;
+    line-height: 18px;
+    display: inline-block;
+    min-width: 49px;
+    z-index: 1;
+  }
+  .menu-multi {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-sm) var(--padding-lg) 8px;
+    position: relative;
+    z-index: 9;
+    font-size: var(--base-tiny-size);
+  }
+  .menu-multi-item {
+    height: 100%;
+    width: 90%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+    background-color: var(--danger);
+  }
+  .component-1-icon {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    object-fit: cover;
+    min-height: 20px;
+  }
+  .dashboard1 {
+    position: relative;
+    font-size: var(--base-large-size);
+    font-family: var(--heading-h5-heading);
+    color: var(--light-white);
+    text-align: left;
+    display: inline-block;
+    min-width: 123px;
+  }
+  .component-1-parent,
+  .menu-multi1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .component-1-parent {
+    align-items: flex-end;
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi1 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-mini) var(--padding-lg);
+    background-color: transparent;
+    width: 250px;
+    align-items: flex-start;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+  }
+  .menu-multi-inner {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+  }
+  .component-1-icon1 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    min-height: 20px;
+  }
+  .dashboard2 {
+    position: relative;
+  }
+  .component-1-group,
+  .menu-multi2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .component-1-group {
+    align-items: flex-end;
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi2 {
+    width: 250px;
+    align-items: flex-start;
+    padding: var(--padding-mini) var(--padding-lg);
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    z-index: 11;
+  }
+  .menu-multi-child1 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+  }
+  .component-1-icon2 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    min-height: 20px;
+  }
+  .dashboard3 {
+    position: relative;
+    display: inline-block;
+    min-width: 109px;
+  }
+  .component-1-container,
+  .menu-multi3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .component-1-container {
+    align-items: flex-end;
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi3 {
+    width: 250px;
+    align-items: flex-start;
+    padding: var(--padding-mini) var(--padding-lg);
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    z-index: 12;
+  }
+  .menu-multi-child2 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+  }
+  .component-1-icon3 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    object-fit: cover;
+    min-height: 20px;
+  }
+  .dashboard4 {
+    position: relative;
+    white-space: pre-wrap;
+  }
+  .group-div,
+  .menu-multi4 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .group-div {
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi4 {
+    width: 250px;
+    padding: var(--padding-mini) var(--padding-lg);
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    z-index: 13;
+  }
+  .menu-multi-child3 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+  }
+  .component-1-icon4 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    object-fit: cover;
+    min-height: 20px;
+  }
+  .dashboard5 {
+    position: relative;
+    display: inline-block;
+    min-width: 105px;
+  }
+  .component-1-parent1,
+  .menu-multi5 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .component-1-parent1 {
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi5 {
+    width: 250px;
+    padding: var(--padding-mini) var(--padding-lg);
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    z-index: 14;
+  }
+  .menu-multi-child4 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+  }
+  .component-1-icon5 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    object-fit: cover;
+    min-height: 20px;
+  }
+  .dashboard6 {
+    position: relative;
+    display: inline-block;
+    min-width: 46px;
+  }
+  .component-1-parent2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 0 var(--padding-xl) 0 0;
+    gap: var(--gap-sm);
+    z-index: 1;
+  }
+  .menu-multi6,
+  .rectangle-parent5 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+  .menu-multi6 {
+    width: 250px;
+    flex-direction: row;
+    padding: var(--padding-mini) var(--padding-lg);
+    position: relative;
+    cursor: pointer;
+    z-index: 15;
+  }
+  .rectangle-parent5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-darkslategray-100);
+    width: 240px;
+    height: 1080px;
+    flex-direction: column;
+    padding: 0 0 660px;
+    z-index: 7;
+    font-size: var(--base-large-size);
+    color: var(--light-white);
+    font-family: var(--heading-h5-heading);
+  }
+  .frame-child11 {
+    height: 70px;
+    width: 1652px;
+    position: relative;
+    box-shadow: var(--regular);
+    background-color: var(--light-white);
+    display: none;
+    max-width: 100%;
+  }
+  .h4-heading1 {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    line-height: 24px;
+    font-weight: 500;
+    font-family: inherit;
+    z-index: 1;
+  }
+  .h4-heading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 6px 0 0;
+  }
+  .textbox-child {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 20px;
+    background-color: var(--light-light);
+  }
+  .component-1-icon6 {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    object-fit: cover;
+  }
+  .component-1-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-9xs) 0 0;
+  }
+  .search {
+    width: calc(100% - 14px);
+    border: 0;
+    outline: 0;
+    font-family: var(--base-body);
+    font-size: var(--base-body-size);
+    background-color: transparent;
+    height: 22px;
+    flex: 1;
+    position: relative;
+    line-height: 22px;
+    color: var(--color-black);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    min-width: 35px;
+    padding: 0;
+  }
+  .frame-parent,
+  .textbox {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    z-index: 1;
+  }
+  .frame-parent {
+    width: 80px;
+    gap: 8px;
+  }
+  .textbox {
+    width: 400px;
+    padding: 7px var(--padding-xs);
+    box-sizing: border-box;
+    position: relative;
+    max-width: 100%;
+  }
+  .admin-panel,
+  .rectangle-parent6 {
+    background-color: var(--light-white);
+    
+  }
+  .rectangle-parent6 {
+    position: absolute;
+    top: 0;
+    left: 240px;
+    box-shadow: var(--regular);
+    width: 84.2%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mid) var(--padding-xl);
+    box-sizing: border-box;
+    gap: 391px;
+    font-size: var(--heading-h5-heading-size);
+    color: var(--light-dark);
+    font-family: var(--heading-h5-heading);
+  }
+  
   

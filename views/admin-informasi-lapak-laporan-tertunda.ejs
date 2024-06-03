@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Lapak</title>
+    <link rel="stylesheet" href="/css/admin-informasi-lapak-laporan-tertunda.css">
+</head>
+<body>
+    <%- include('./layout/sidebar.ejs') %>
+    <%- include('./layout/header.ejs') %>
+    <div class="container">
+        <main class="main-content">
+            <section class="lapak-info">
+                <div class="header">
+                    <div class="left-header">
+                        <p class="nama-lapak"><%= lapak.nama_lapak %></p>
+                        <p class="alamat-lapak"><%= lapak.lokasi_lapak %></p>
+                    </div>
+                    <div class="right-header">
+                        <button class="back-button" onclick="location.href='/admin-terverifikasi'">Kembali</button>
+                    </div>
+                </div>
+                <div class="lapak-details">
+                    <div class="left-column">
+                        <h3 class="garis">Tentang Lapak</h3>
+                        <p><strong>Nama Lapak</strong></p>
+                        <p class="garis"><%= lapak.nama_lapak %></p>
+                        <p><strong>Kategori Bisnis</strong></p>
+                        <p class="garis"><%= lapak.kategori_lapak %></p>
+                        <p><strong>Deskripsi Lapak</strong></p>
+                        <p class="deskripsi-lapak"><%= lapak.deskripsi_lapak %></p>
+                        
+                        <h3 class="garis">Informasi Kontak</h3>
+                        <p><strong>No. Telepon</strong></p>
+                        <p><%= lapak.nomor_telepon %></p>
+                        
+                        <h3 class="garis">Lokasi</h3>
+                        <p><strong>Lokasi Lapak</strong></p>
+                        <p><%= lapak.lokasi_lapak %></p>
+
+                        <h3 class="garis">Foto Lapak</h3>
+                        <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo">
+                    </div>
+                    <div class="mid-column">
+                        <h3 class="garis">Laporan Tertunda</h3>
+                        <% laporan.forEach(report => { %>
+                            <div class="report" data-id-laporan="<%= report.id_laporan %>">
+                                <p>
+                                    <img src="/image/Group 60439.png" class="profile-report">
+                                    <strong><%= report.nama_lengkap %>:</strong> <%= report.alasan_lapak %>
+                                </p>
+                                <% if (report.foto) { %>
+                                    <div class="report-content">
+                                        <img src="data:image/jpeg;base64,<%= report.foto.toString('base64') %>" alt="Report Photo" class="report-image">
+                                        <div class="button-group">
+                                            <button class="terima-button">Terima</button>
+                                            <button class="tolak-button">Tolak</button>
+                                        </div>
+                                    </div>
+                                <% } %>
+                                <h3 class="garis"></h3>
+                            </div>
+                        <% }) %>
+                    </div>
+                    
+                    <div class="right-column">
+                    
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.terima-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const reportElement = this.closest('.report');
+                    const idLaporan = reportElement.getAttribute('data-id-laporan');
+    
+                    fetch(`/laporan/approve/${idLaporan}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            reportElement.remove();
+                        } else {
+                            alert('Gagal menerima laporan');
+                        }
+                    });
+                });
+            });
+    
+            document.querySelectorAll('.tolak-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const reportElement = this.closest('.report');
+                    const idLaporan = reportElement.getAttribute('data-id-laporan');
+    
+                    fetch(`/laporan/reject/${idLaporan}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            reportElement.remove();
+                        } else {
+                            alert('Gagal menolak laporan');
+                        }
+                    });
+                });
+            });
+        });
+    </script>    
+</body>
+</html>
