@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+  <link rel="stylesheet" href="/css/global-admin-informasi-lapak-pengajuan.css" />
+  <link rel="stylesheet" href="/css/admin-informasi-lapak-terblokir.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+  />
+</head>
+<body>
+  <%- include('./layout/sidebar.ejs') %>
+  <%- include('./layout/header.ejs') %>
+  <div class="container">
+    <main class="main-content">
+      <section class="lapak-info">
+        <div class="header">
+          <div class="left-header">
+            <p class="nama-lapak"><%= lapak.nama_lapak %></p>
+            <p class="alamat-lapak"><%= lapak.lokasi_lapak %></p>
+          </div>
+          <div class="right-header">
+            <button class="back-button" onclick="location.href='/admin-lapak-terblokir'">Kembali</button>
+          </div>
+        </div>
+        <div class="lapak-details">
+          <div class="left-column">
+            <h3 class="garis">Tentang Lapak</h3>
+            <p><strong>Nama Lapak</strong></p>
+            <p class="garis"><%= lapak.nama_lapak %></p>
+            <p><strong>Kategori Bisnis</strong></p>
+            <p class="garis"><%= lapak.kategori_lapak %></p>
+            <p><strong>Deskripsi Lapak</strong></p>
+            <p class="deskripsi-lapak"><%= lapak.deskripsi_lapak %></p>
+            
+            <h3 class="garis">Informasi Kontak</h3>
+            <p><strong>No. Telepon</strong></p>
+            <p><%= lapak.nomor_telepon %></p>
+            
+            <h3 class="garis">Lokasi</h3>
+            <p><strong>Lokasi Lapak</strong></p>
+            <p><%= lapak.lokasi_lapak %></p>
+            <img src="/image/map1@2x.png" alt="Lokasi Lapak" class="map-image">
+          </div>
+          <div class="mid-column">
+            <h3 class="garis">Jam Buka</h3>
+            <ul class="opening-hours">
+              <% lapak.jam_buka.forEach((jam, index) => { %>
+              <li><strong><%= jam.hari %></strong></li>
+              <li><%= jam.jam_buka %> - <%= jam.jam_tutup %></li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="right-column">
+            <h3 class="garis">Layanan</h3>
+            <p><%= lapak.layanan %></p>
+            
+            <h3 class="garis">Foto Lapak</h3>
+            <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo">
+            
+            <h3 class="garis">Verifikasi</h3>
+            <div class="verification-buttons">
+              <!-- <button class="reject-button" onclick="rejectLapak()">Tetap Blokir</button> -->
+              <button class="accept-button" onclick="acceptLapak()">Lepas Blokir</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Popup HTML -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p id="popup-message"></p>
+      <button id="popup-button">Kembali ke Daftar Lapak Terblokir</button>
+    </div>
+  </div>
+
+  <script>
+    function acceptLapak() {
+      const idLapak = '<%= lapak.id_lapak %>';
+      fetch(`/admin-informasi-lapak-pengajuan/${idLapak}/accept`, {
+        method: 'POST'
+      })
+      .then(response => {
+        if (response.ok) {
+          showPopup('Pemblokiran lapak berhasil dilepas');
+        } else {
+          alert('Gagal melepas blokir lapak');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan pada server');
+      });
+    }
+
+    function showPopup(message) {
+      const popup = document.getElementById('popup');
+      const popupMessage = document.getElementById('popup-message');
+      popupMessage.textContent = message;
+      popup.style.display = 'flex';
+    }
+
+    document.getElementById('popup-button').addEventListener('click', () => {
+      window.location.href = '/admin-lapak-terblokir';
+    });
+  </script>
+</body>
+</html>
