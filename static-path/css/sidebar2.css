@@ -449,10 +449,9 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding: var(--padding-9xs) 0 0;
-    margin-right: 15px;
   }
   .search {
-    width: 100%;
+    width: calc(100% - 14px);
     border: 0;
     outline: 0;
     font-family: var(--base-body);
@@ -466,7 +465,7 @@
     text-align: left;
     display: flex;
     align-items: center;
-    /* min-width: 35px; */
+    min-width: 35px;
     padding: 0;
   }
   .frame-parent,
@@ -478,7 +477,7 @@
     z-index: 1;
   }
   .frame-parent {
-    width: 100%;
+    width: 80px;
     gap: 8px;
   }
   .textbox {

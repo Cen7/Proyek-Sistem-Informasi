@@ -6,7 +6,7 @@ body {
   :root {
     /* fonts */
     --base-body: Poppins;
-    --heading-h5-heading: Roboto;
+    --heading-h5-heading: Poppins;
   
     /* font sizes */
     --font-size-lgi: 19px;

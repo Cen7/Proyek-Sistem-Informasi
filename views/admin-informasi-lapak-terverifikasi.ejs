@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/admin-informasi-lapak-terverifikasi.css">
 </head>
 <body>
-    <%- include('./layout/sidebar.ejs') %>
+    <%- include('./layout/sidebar2.ejs') %>
     <%- include('./layout/header.ejs') %>
     <div class="container">
         <main class="main-content">
@@ -66,7 +66,7 @@
                         <h3 class="garis"></h3>
                     </div>
                 <% }) %>
-                    <button class="block-button">Blokir Lapak</button>
+                <button class="block-button" onclick="location.href='/admin-lapak-terverifikasi-blokir/<%= lapak.id_lapak %>'">Blokir Lapak</button>
               </div>
             </div>
           </section>
