@@ -67,6 +67,11 @@ app.get("/admin-pembaruan", (req, res) => {
   res.render("admin-pembaruan" , { pageTitle: 'Daftar Lapak Untuk Diperbarui' });
 });
 
+app.get("/admin-pembaruan-verif", (req, res) => {
+  res.render("admin-pembaruan-verif" , { pageTitle: 'Informasi Lapak' });
+});
+
+
 app.get("/admin-pengajuan", (req, res) => {
   res.render("admin-pengajuan" , { pageTitle: 'Daftar Pengajuan Lapak' });
 });

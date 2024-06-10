@@ -23,19 +23,24 @@ tr:nth-child(even) {
   background-color: #fff;
 }
 .informasi-table-verifikasi th:nth-child(1), .informasi-table-verifikasi td:nth-child(1) {
-  width: 20%; /* Tentukan lebar kolom Nama Lapak */
+  width: 15%; /* Tentukan lebar kolom Nama Lapak */
 }
 .informasi-table-verifikasi th:nth-child(2), .informasi-table-verifikasi td:nth-child(2) {
-  width: 30%; /* Tentukan lebar kolom Alamat */
+  width: 35%; /* Tentukan lebar kolom Alamat */
 }
-.informasi-table-verifikasi th:nth-child(3), .informasi-table-verifikasi td:nth-child(3),
+.informasi-table-verifikasi th:nth-child(3), .informasi-table-verifikasi td:nth-child(3){
+  width: 20%; /* Tentukan lebar kolom Alamat */
+  text-align: center;
+}
 .informasi-table-verifikasi th:nth-child(4), .informasi-table-verifikasi td:nth-child(4),
 .informasi-table-verifikasi th:nth-child(5), .informasi-table-verifikasi td:nth-child(5),
 .informasi-table-verifikasi th:nth-child(6), .informasi-table-verifikasi td:nth-child(6),
 .informasi-table-verifikasi th:nth-child(7), .informasi-table-verifikasi td:nth-child(7),
 .informasi-table-verifikasi th:nth-child(8), .informasi-table-verifikasi td:nth-child(8) {
-  width: 10%; /* Tentukan lebar kolom lainnya */
+  width: 8%; /* Tentukan lebar kolom lainnya */
   text-align: center; /* Pusatkan teks secara horizontal */
+  justify-content: center;
+  align-items: center;
 }
 
 .deskripsi-table-verifikasi{
@@ -299,4 +304,39 @@ tr:nth-child(even) {
 .chevron-right-icon1 {
   right: 223px;
   object-fit: contain;
+}
+
+/* admin-pembaruan.css */
+
+/* Style for action button */
+.action-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #969696d7; /* Warna latar belakang */
+  color: #fff; /* Warna teks */
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Efek transisi ketika tombol dihover */
+}
+
+.action-button:hover {
+  background-color: #cc2b2b; /* Warna latar belakang saat tombol dihover */
+}
+
+.action-button:focus {
+  outline: none; /* Hilangkan outline saat tombol mendapatkan fokus */
+}
+.deskripsi-table-status {
+  
+  display: flex; /* Agar latar belakang hanya mengelilingi teks */
+  padding: 5px 10px; /* Sesuaikan padding sesuai kebutuhan */
+  border-radius: 30px; /* Menjadikan latar belakang bulat */
+  text-align: center;
+  background-color: #c91919d7; /* Warna latar belakang */
+  color: #fff; /* Warna teks */
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-top:5%;
 }

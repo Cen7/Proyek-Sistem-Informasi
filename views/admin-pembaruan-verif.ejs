@@ -1,131 +1,174 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+<html lang="en">
 
-    <link rel="stylesheet" href="css/global-pembaruan-verif.css" />
-    <link rel="stylesheet" href="css/admin-pembaruan-verif.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-    />
-  </head>
-  <body>
-    <%- include('./layout/sidebar.ejs') %>
-    <%- include('./layout/header.ejs') %>
-    
-    <table class="tabel-verifikasi-lapak">
-      <thead>
-        <tr class="informasi-table-verifikasi">
-          <th>Nama Lapak</th>
-          <th>Alamat</th>
-          <th class="ulasan">Ulasan</th>
-          <th>Total Laporan Terlampir</th>
-          <th>Total Laporan Tertunda</th>
-          <th>Laporan Tertunda</th>
-          <th>Status</th>
-          <th>Informasi Lapak</th>
-        </tr>
-      </thead>
-      <tbody>
-         <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/global-pembaruan.css">
+  <link rel="stylesheet" href="/css/admin-pembaruan-verif.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <title>Informasi Pembaruan Lapak</title>
+</head>
 
-        <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr> 
+<body>
+  <%- include('layout/sidebar') %>
+    <div class="main-content">
+      <%- include('layout/header') %>
+        <div class="container">
+          <h2>Teman Lama</h2>
+                <p>Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
+                <a href="/admin-pembaruan">
+                  <button class="back-btn">Kembali</button>
+                </a>
+               
+          <div class="content">
+            <div class="column">
+              <div class="info-section">
+                
+                <div class="section">
+                  <h3>Tentang Lapak</h3>
+                  <p><strong>Nama Lapak:</strong> Teman Lama</p>
+                  <p><strong>Kategori Bisnis:</strong> Kafe dan Restoran</p>
+                  <p><strong>Deskripsi Lapak:</strong> Restoran yang menyediakan kopi, Indonesian food, dan western
+                    food. Enak, murah, dan nyaman. Cocok untuk nugas dan berkumpul</p>
+                </div>
+                <div class="section">
+                  <h3>Lokasi</h3>
+                  <p><strong>Lokasi Lapak:</strong> Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
+                  <div class="image-container">
+                    <div class="image-box">Peta Lokasi</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-section">
+                <div class="section">
+                  <h3>Jam Buka</h3>
+                  <form class="operating-hours-form">
+                    <!-- Senin -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Senin:</label>
+                        <input type="radio" name="senin" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="senin" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
 
-        <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr> 
-      </tbody>
-    </table>
-    <footer class="tabel-footer">
-      <div class="rectangle-container">
-        <div class="frame-child1"></div>
-        <div class="frame-child2"></div>
-        <div class="frame-child3"></div>
-        <div class="frame-child4"></div>
-        <div class="rectangle-parent1">
-          <div class="frame-child5"></div>
-          <div class="empty-wrapper">
-            <div class="empty">1</div>
+                    <!-- Selasa -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Selasa:</label>
+                        <input type="radio" name="selasa" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="selasa" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                    <!-- Rabu -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Rabu:</label>
+                        <input type="radio" name="rabu" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="rabu" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                    <!-- Kamis -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Kamis:</label>
+                        <input type="radio" name="kamis" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="kamis" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                    <!-- Jumat -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Jumat:</label>
+                        <input type="radio" name="jumat" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="jumat" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                    <!-- Sabtu -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Sabtu:</label>
+                        <input type="radio" name="sabtu" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="sabtu" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                    <!-- Minggu -->
+                    <div class="operating-hours-item">
+                      <div class="radio-container">
+                        <label>Minggu:</label>
+                        <input type="radio" name="minggu" value="buka" checked disabled>
+                        <span class="time-box">Buka</span>
+                        <input type="radio" name="minggu" value="tutup" disabled>
+                        <span class="time-box">Tutup</span>
+                      </div>
+                      <div class="time-range">08:00 - 20:00</div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-section">
+                <div class="section">
+                  <h3>Layanan</h3>
+                  <p>Dibawa pulang</p>
+                  <p>Makan ditempat</p>
+                  <p>Ojek online</p>
+                </div>
+                <div class="section">
+                  <h3>Foto Lapak</h3>
+                  <div class="image-container">
+                    <div class="image-box">Foto Lapak</div>
+                  </div>
+                </div>
+                <div class="section">
+                  <h3>Daftar Perubahan</h3>
+                  <p><strong>Nama Lapak:</strong> Kopi Teman Lama</p>
+                  <p><strong>Jam Buka:</strong> Senin - Buka 09:00 - 18:00</p>
+                </div>
+                <div class="action-buttons">
+                  <a href="/admin-pembaruan">
+                    <button class="reject-btn">Tolak Perubahan</button>
+                  </a>
+                  <a href="/admin-pembaruan">
+                    <button class="accept-btn">Terima perubahan</button>
+                  </a>
+                  
+                  
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="showing-1-to">Showing 1 to 10 of 50 entries</div>
-        <div class="display">Display</div>
-        <div class="div">10</div>
-        <div class="rectangle-parent2">
-          <div class="frame-child6"></div>
-          <div class="div1">2</div>
-        </div>
-        <div class="rectangle-parent3">
-          <div class="frame-child7"></div>
-          <div class="div2">3</div>
-        </div>
-        <div class="rectangle-parent4">
-          <div class="frame-child8"></div>
-          <div class="div3">4</div>
-        </div>
-        <img
-          class="chevron-right-icon"
-          loading="lazy"
-          alt=""
-          src="./public/chevronright.svg"
-        />
+    </div>
+</body>
 
-        <img
-          class="chevron-right-icon1"
-          loading="lazy"
-          alt=""
-          src="./public/chevronright-1.svg"
-        />
-      </div>
-      <img class="tabel-footer-child" alt="" src="./public/group-203.svg" />
-
-      <div class="tabel-footer-item"></div>
-    </footer>
-  
-
-    <div class="h4-heading">All (3)</div>
-  </body>
 </html>
