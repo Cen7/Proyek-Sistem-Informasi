@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,162 +12,171 @@
 
 <body>
   <%- include('layout/sidebar') %>
-    <div class="main-content">
-      <%- include('layout/header') %>
-        <div class="container">
-          <h2>Teman Lama</h2>
-                <p>Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
-                <a href="/admin-pembaruan">
-                  <button class="back-btn">Kembali</button>
-                </a>
-               
-          <div class="content">
-            <div class="column">
-              <div class="info-section">
-                
-                <div class="section">
-                  <h3>Tentang Lapak</h3>
-                  <p><strong>Nama Lapak:</strong> Teman Lama</p>
-                  <p><strong>Kategori Bisnis:</strong> Kafe dan Restoran</p>
-                  <p><strong>Deskripsi Lapak:</strong> Restoran yang menyediakan kopi, Indonesian food, dan western
-                    food. Enak, murah, dan nyaman. Cocok untuk nugas dan berkumpul</p>
-                </div>
-                <div class="section">
-                  <h3>Lokasi</h3>
-                  <p><strong>Lokasi Lapak:</strong> Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
-                  <div class="image-container">
-                    <div class="image-box">Peta Lokasi</div>
-                  </div>
-                </div>
-              </div>
+  <div class="main-content">
+    <%- include('layout/header') %>
+    <div class="container">
+      <h2>Teman Lama</h2>
+      <p>Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
+      <a href="/admin-pembaruan">
+        <button class="back-btn">Kembali</button>
+      </a>
+      
+      <div class="content">
+        <div class="column">
+          <div class="info-section">
+            <div class="section">
+              <h3 class="judulIndentifikasi">Tentang Lapak</h3>
+              <p><strong>Nama Lapak:</strong> Teman Lama</p>
+              <p><strong>Kategori Bisnis:</strong> Kafe dan Restoran</p>
+              <p><strong>Deskripsi Lapak:</strong> Restoran yang menyediakan kopi, Indonesian food, dan western food. Enak, murah, dan nyaman. Cocok untuk nugas dan berkumpul</p>
             </div>
-            <div class="column">
-              <div class="info-section">
-                <div class="section">
-                  <h3>Jam Buka</h3>
-                  <form class="operating-hours-form">
-                    <!-- Senin -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Senin:</label>
-                        <input type="radio" name="senin" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="senin" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Selasa -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Selasa:</label>
-                        <input type="radio" name="selasa" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="selasa" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Rabu -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Rabu:</label>
-                        <input type="radio" name="rabu" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="rabu" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Kamis -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Kamis:</label>
-                        <input type="radio" name="kamis" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="kamis" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Jumat -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Jumat:</label>
-                        <input type="radio" name="jumat" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="jumat" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Sabtu -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Sabtu:</label>
-                        <input type="radio" name="sabtu" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="sabtu" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                    <!-- Minggu -->
-                    <div class="operating-hours-item">
-                      <div class="radio-container">
-                        <label>Minggu:</label>
-                        <input type="radio" name="minggu" value="buka" checked disabled>
-                        <span class="time-box">Buka</span>
-                        <input type="radio" name="minggu" value="tutup" disabled>
-                        <span class="time-box">Tutup</span>
-                      </div>
-                      <div class="time-range">08:00 - 20:00</div>
-                    </div>
-
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="info-section">
-                <div class="section">
-                  <h3>Layanan</h3>
-                  <p>Dibawa pulang</p>
-                  <p>Makan ditempat</p>
-                  <p>Ojek online</p>
-                </div>
-                <div class="section">
-                  <h3>Foto Lapak</h3>
-                  <div class="image-container">
-                    <div class="image-box">Foto Lapak</div>
-                  </div>
-                </div>
-                <div class="section">
-                  <h3>Daftar Perubahan</h3>
-                  <p><strong>Nama Lapak:</strong> Kopi Teman Lama</p>
-                  <p><strong>Jam Buka:</strong> Senin - Buka 09:00 - 18:00</p>
-                </div>
-                <div class="action-buttons">
-                  <a href="/admin-pembaruan">
-                    <button class="reject-btn">Tolak Perubahan</button>
-                  </a>
-                  <a href="/admin-pembaruan">
-                    <button class="accept-btn">Terima perubahan</button>
-                  </a>
-                  
-                  
-                </div>
+            <div class="section">
+              <h3 class="judulIndentifikasi">Lokasi</h3>
+              <p><strong>Lokasi Lapak:</strong> Jl. Bima No.60, Arjuna, Kec. Cicendo, Kota Bandung</p>
+              <div class="image-container">
+                <div class="image-box">Peta Lokasi</div>
               </div>
             </div>
           </div>
         </div>
+        <div class="column">
+          <div class="info-section">
+            <div class="section">
+              <h3 class="judulIndentifikasi">Jam Buka</h3>
+              <form class="operating-hours-form">
+                <!-- Senin -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Senin:</label>
+                    <input type="radio" id="senin-buka" name="senin" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="senin-tutup" name="senin" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Selasa -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Selasa:</label>
+                    <input type="radio" id="selasa-buka" name="selasa" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="selasa-tutup" name="selasa" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Rabu -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Rabu:</label>
+                    <input type="radio" id="rabu-buka" name="rabu" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="rabu-tutup" name="rabu" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Kamis -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Kamis:</label>
+                    <input type="radio" id="kamis-buka" name="kamis" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="kamis-tutup" name="kamis" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Jumat -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Jumat:</label>
+                    <input type="radio" id="jumat-buka" name="jumat" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="jumat-tutup" name="jumat" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Sabtu -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Sabtu:</label>
+                    <input type="radio" id="sabtu-buka" name="sabtu" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="sabtu-tutup" name="sabtu" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+
+                <!-- Minggu -->
+                <div class="operating-hours-item">
+                  <div class="radio-container">
+                    <label>Minggu:</label>
+                    <input type="radio" id="minggu-buka" name="minggu" value="buka" checked disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Buka</span>
+                    <input type="radio" id="minggu-tutup" name="minggu" value="tutup" disabled>
+                    <span class="custom-radio"></span>
+                    <span class="time-box">Tutup</span>
+                  </div>
+                  <div class="time-range">08:00 - 20:00</div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="info-section">
+            <div class="section">
+              <h3 class="judulIndentifikasi">Layanan</h3>
+              <p>Dibawa pulang</p>
+              <p>Makan ditempat</p>
+              <p>Ojek online</p>
+            </div>
+            <div class="section">
+              <h3 class="judulIndentifikasi">Foto Lapak</h3>
+              <div class="image-container">
+                <div class="image-box">Foto Lapak</div>
+              </div>
+            </div>
+            <div class="section">
+              <h3 class="judulIndentifikasi">Daftar Perubahan</h3>
+              <p><strong>Nama Lapak:</strong> Kopi Teman Lama</p>
+              <p><strong>Jam Buka:</strong> Senin - Buka 09:00 - 18:00</p>
+            </div>
+            <div class="action-buttons">
+              <a href="/admin-pembaruan">
+                <button class="reject-btn">Tolak Perubahan</button>
+              </a>
+              <a href="/admin-pembaruan">
+                <button class="accept-btn">Terima perubahan</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>
