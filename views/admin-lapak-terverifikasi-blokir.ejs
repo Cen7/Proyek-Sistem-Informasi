@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Lapak</title>
+    <link rel="stylesheet" href="/css/admin-lapak-terverifikasi-blokir.css">
+</head>
+<body>
+    <%- include('./layout/sidebar2.ejs') %>
+    <%- include('./layout/header.ejs') %>
+    <div class="container">
+        <main class="main-content">
+          <section class="lapak-info">
+            <div class="header">
+              <div class="left-header">
+                <p class="nama-lapak"><%= lapak.nama_lapak %></p>
+                <p class="alamat-lapak"><%= lapak.lokasi_lapak %></p>
+              </div>
+              <div class="right-header">
+                <button class="back-button" onclick="location.href='/admin-informasi-lapak-terverifikasi/<%= lapak.id_lapak %>'">Kembali</button>
+              </div>
+            </div>
+            <div class="lapak-details">
+              <div class="left-column">
+                <h3 class="garis">Laporan</h3>
+                <% laporan.forEach(report => { %>
+                    <div class="report">
+                        <p><img src="/image/Group 60439.png" class="profile-report">
+                            <strong><%= report.nama_lengkap %>:</strong> <%= report.alasan_lapak %></p>
+                        <% if (report.foto) { %>
+                            <img src="data:image/jpeg;base64,<%= report.foto.toString('base64') %>" alt="Report Photo" class="report-image">
+                        <% } %>
+                        <h3 class="garis"></h3>
+                    </div>
+                <% }) %>
+              </div>
+              <div class="mid-column">
+                <h3 class="garis">Keterangan Blokir</h3>
+                <textarea class="alasan-blokir" placeholder="keterangan blokir ..."></textarea>
+                <h3 class="garis"></h3>
+                <button class="block-button" onclick="blokirLapak()">Blokir Lapak</button>
+              </div>
+              <div class="right-column">
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <div class="popup" id="popup">
+        <div class="popup-content">
+          <p>Lapak berhasil diblokir</p>
+          <button id="popup-button" onclick="kembaliKeHalamanTerverifikasi()">Kembali ke Daftar Lapak Terverifikasi</button>
+        </div>
+      </div>
+
+    <script>
+      function blokirLapak() {
+        const idLapak = '<%= lapak.id_lapak %>';
+        fetch(`/admin-lapak-terverifikasi-blokir/${idLapak}/blokir`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('popup').style.display = 'flex';
+          } else {
+            alert('Gagal memblokir lapak');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat memblokir lapak');
+        });
+      }
+
+      function kembaliKeHalamanTerverifikasi() {
+        window.location.href = '/admin-terverifikasi';
+      }
+    </script>
+</body>
+</html>
