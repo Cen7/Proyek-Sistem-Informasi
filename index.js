@@ -593,6 +593,185 @@ app.post('/laporan/reject/:id_laporan', (req, res) => {
   });
 });
 
+app.get("/admin-lapak-terblokir", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
+      return;
+    }
+
+    const currentPage = parseInt(req.query.page) || 1;
+    const itemsPerPage = 8;
+    const offset = (currentPage - 1) * itemsPerPage;
+
+    const countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terblokir'";
+    connection.query(countQuery, (err, countResult) => {
+      if (err) {
+        console.error("Error executing count query:", err.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      const totalCount = countResult[0].count;
+      const pageCount = Math.ceil(totalCount / itemsPerPage);
+
+      const query = `
+        SELECT id_lapak, nama_lapak, tanggal_terblokir, lokasi_lapak, status_lapak 
+        FROM lapak 
+        WHERE status_lapak ='terblokir'
+        LIMIT ? OFFSET ?`;
+
+      connection.query(query, [itemsPerPage, offset], (err, results) => {
+        connection.release();
+
+        if (err) {
+          console.error("Error executing query:", err.message);
+          res.sendStatus(500);
+          return;
+        }
+
+        results.forEach(lapak => {
+          lapak.tanggal_terblokir = moment(lapak.tanggal_terblokir).format('MMMM D, YYYY');
+        });
+
+        res.render("admin-lapak-terblokir", {
+          pageTitle: 'Daftar Blokir Lapak',
+          lapakList: results,
+          dataCount: totalCount,
+          pageCount: pageCount,
+          currentPage: currentPage
+        });
+      });
+    });
+  });
+});
+
+app.get("/admin-informasi-lapak-terblokir/:id_lapak", (req, res) => {
+  const idLapak = parseInt(req.params.id_lapak);
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('Error connecting to database:', err.message);
+      res.status(500).send('Server error');
+      return;
+    }
+
+    const lapakQuery = 'SELECT * FROM lapak WHERE id_lapak = ?';
+    connection.query(lapakQuery, [idLapak], (err, lapakResults) => {
+      if (err) {
+        console.error('Error fetching lapak data:', err);
+        res.status(500).send('Server error');
+        connection.release();
+        return;
+      }
+
+      if (lapakResults.length === 0) {
+        res.status(404).send("Lapak not found");
+        connection.release();
+        return;
+      }
+
+      const lapak = lapakResults[0];
+
+      if (lapak.status === 'terblokir') {
+        const updateStatusQuery = 'UPDATE lapak SET status = ? WHERE id_lapak = ?';
+        connection.query(updateStatusQuery, ['terverifikasi', idLapak], (err, updateResult) => {
+          if (err) {
+            console.error('Error updating lapak status:', err);
+            res.status(500).send('Server error');
+            connection.release();
+            return;
+          }
+
+          // Fetch the updated lapak details
+          connection.query(lapakQuery, [idLapak], (err, updatedLapakResults) => {
+            if (err) {
+              console.error('Error fetching updated lapak data:', err);
+              res.status(500).send('Server error');
+              connection.release();
+              return;
+            }
+
+            
+            connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
+              connection.release();
+
+              if (err) {
+                console.error('Error fetching buka data:', err);
+                res.status(500).send('Server error');
+                return;
+              }
+
+              const formattedBukaResults = bukaResults.map(result => {
+                return {
+                  hari: result.nama_hari,
+                  jam_buka: result.jam_buka,
+                  jam_tutup: result.jam_tutup
+                };
+              });
+
+              updatedLapak.jam_buka = formattedBukaResults;
+              res.render("admin-informasi-lapak-terblokir", { lapak: updatedLapak, pageTitle: 'Informasi Blokir Lapak' });
+            });
+          });
+        });
+      } else {
+        const bukaQuery = `
+          SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
+          FROM buka
+          JOIN hari ON buka.id_hari = hari.id_hari
+          WHERE buka.id_lapak = ?
+        `;
+        connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
+          connection.release();
+
+          if (err) {
+            console.error('Error fetching buka data:', err);
+            res.status(500).send('Server error');
+            return;
+          }
+
+          const formattedBukaResults = bukaResults.map(result => {
+            return {
+              hari: result.nama_hari,
+              jam_buka: result.jam_buka,
+              jam_tutup: result.jam_tutup
+            };
+          });
+
+          lapak.jam_buka = formattedBukaResults;
+          res.render("admin-informasi-lapak-terblokir", { lapak, pageTitle: 'Informasi Blokir Lapak' });
+        });
+      }
+    });
+  });
+});
+
+app.post('/admin-informasi-lapak-terblokir/:id_lapak/accept', (req, res) => {
+  const idLapak = parseInt(req.params.id_lapak);
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('Error connecting to database:', err.message);
+      res.status(500).send('Server error');
+      return;
+    }
+
+    const acceptQuery = 'UPDATE lapak SET status_lapak = "terverifikasi" WHERE id_lapak = ?';
+    connection.query(acceptQuery, [idLapak], (err, results) => {
+      connection.release();
+
+      if (err) {
+        console.error('Error updating lapak status:', err);
+        res.status(500).send('Server error');
+        return;
+      }
+
+      res.sendStatus(200);
+    });
+  });
+});
 app.get("/admin-lapak-terverifikasi-blokir/:id_lapak", (req, res) => {
   const idLapak = parseInt(req.params.id_lapak);
 
