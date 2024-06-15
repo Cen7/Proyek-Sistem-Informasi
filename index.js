@@ -6,10 +6,15 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import mysql from "mysql";
 import forge from "node-forge";
+import multer from "multer";
 
-const port = 8000;
+const port = 8011;
 const app = express();
 app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const publicPath = path.resolve("static-path");
 
 app.use(express.static(publicPath));
@@ -22,7 +27,7 @@ const pool = mysql.createPool({
   multipleStatements: true,
   user: "root",
   password: "",
-  database: "prosi",
+  database: "testing",
   host: "127.0.0.1",
 });
 
@@ -35,9 +40,18 @@ pool.getConnection((err, connection) => {
   }
 });
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+app.use(session({
+  name: 'session',
+  keys: ['key1', 'key2'], 
+  maxAge: 24 * 60 * 60 * 1000 // 24 jam
+}));
 
 app.get("/", (req, res) => {
   res.render("login");
@@ -59,12 +73,28 @@ app.get("/tes", (req, res) => {
   res.render("tes");
 });
 
+app.get("/teschat", (req, res) => {
+  res.render("teschat");
+});
+
 app.get("/admin-terverifikasi", (req, res) => {
   res.render("admin-terverifikasi" , { pageTitle: 'Daftar Lapak Terverifikasi' });
 });
 
 app.get("/admin-pengajuan", (req, res) => {
   res.render("admin-pengajuan" , { pageTitle: 'Daftar Pengajuan Lapak' });
+});
+
+// app.get("/pusat-bantuan", (req, res) => {
+//   res.render("pusat-bantuan" , { pageTitle: 'Pusat Bantuan' });
+// });
+
+// app.get("/pusat-bantuan2", (req, res) => {
+//   res.render("pusat-bantuan2" , { pageTitle: 'Pusat Bantuan' });
+// });
+
+app.get("/informasi-pengajuan-bantuan", (req, res) => {
+  res.render("informasi-pengajuan-bantuan" , { pageTitle: 'Pusat Bantuan' });
 });
 
 app.post("/login", (req, res) => {
@@ -88,6 +118,13 @@ app.post("/login", (req, res) => {
       }
 
       if (results.length > 0) {
+        const user = results[0];
+        req.session.user = {
+          id: user.id_pengguna,
+          username: user.username,
+          role: user.role
+        };
+        
         res.redirect("/admin-pengajuan");
       } else {
         res.redirect("/?error=1"); 
@@ -123,4 +160,88 @@ app.post("/signup", (req, res) => {
       res.redirect("/admin-pengajuan");
     });
   });
+});
+
+
+app.get("/pusat-bantuan", (req, res) => {
+  pool.query(
+    `SELECT t.ticket_id, t.subject, t.created_at, t.status, u.username 
+     FROM support_tickets t 
+     JOIN pengguna u ON t.user_id = u.id_pengguna`,
+    (error, results) => {
+      if (error) throw error;
+      res.render("pusat-bantuan", { tickets: results });
+    }
+  );
+});
+
+app.get("/pusat-bantuan/:id", (req, res) => {
+  const ticketId = req.params.id;
+  pool.query(
+    `SELECT m.*, u.username, a.file_path 
+     FROM messages m 
+     JOIN pengguna u ON m.sender_id = u.id_pengguna 
+     LEFT JOIN attachments a ON m.message_id = a.message_id
+     WHERE m.ticket_id = ? 
+     ORDER BY m.created_at`,
+    [ticketId],
+    (error, results) => {
+      if (error) throw error;
+      pool.query(
+        `SELECT t.*, u.username 
+         FROM support_tickets t 
+         JOIN pengguna u ON t.user_id = u.id_pengguna 
+         WHERE t.ticket_id = ?`,
+        [ticketId],
+        (error, ticket) => {
+          if (error) throw error;
+          res.render("pusat-bantuan2", { messages: results, ticket: ticket[0] });
+        }
+      );
+    }
+  );
+});
+
+
+app.post("/send-message", (req, res) => {
+  const { text } = req.body;
+  const ticketId = req.query.ticketId; 
+  const senderId = req.session.user.id; 
+  const senderType = "admin";
+
+  pool.query(
+    `INSERT INTO messages (ticket_id, sender_id, sender_type, message, created_at) 
+     VALUES (?, ?, ?, ?, NOW())`,
+    [ticketId, senderId, senderType, text],
+    (error) => {
+      if (error) throw error;
+      res.sendStatus(200);
+    }
+  );
+});
+
+app.post("/send-photo", upload.single('photo'), (req, res) => {
+  const ticketId = req.query.ticketId;
+  const senderId = req.session.user.id;
+  const senderType = "admin";
+  const photo = req.file.buffer;
+
+  pool.query(
+    `INSERT INTO messages (ticket_id, sender_id, sender_type, message, created_at) 
+     VALUES (?, ?, ?, ?, NOW())`,
+    [ticketId, senderId, senderType, null],
+    (error, result) => {
+      if (error) throw error;
+      const messageId = result.insertId;
+      pool.query(
+        `INSERT INTO attachments (message_id, file_path, file_type, uploaded_at) 
+         VALUES (?, ?, ?, NOW())`,
+        [messageId, photo, req.file.mimetype],
+        (error) => {
+          if (error) throw error;
+          res.json({ photoPath: `data:${req.file.mimetype};base64,${photo.toString('base64')}` });
+        }
+      );
+    }
+  );
 });

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pengajuan Bantuan</title>
+    <link rel="stylesheet" href="css/pusat-bantuan.css" />
+</head>
+
+
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Pengajuan Lapak</a></li>
+                <li><a href="#">Lapak Terverifikasi</a></li>
+                <li><a href="#">Lapak Terblokir</a></li>
+                <li><a href="#">Pembaharuan Lapak</a></li>
+                <li><a href="#" class="active">Pusat Bantuan</a></li>
+                <li><a href="#">Keluar</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <header>
+                <h1>Daftar Pengajuan Bantuan</h1>
+                <input type="search" placeholder="Search...">
+            </header>
+            <table>
+              <thead>
+                  <tr>
+                      <th>Nama User</th>
+                      <th>Tanggal Pengajuan</th>
+                      <th>Keterangan</th>
+                      <th>Status</th>
+                      <th>Bantuan</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <% tickets.forEach(ticket => { %>
+                      <tr>
+                          <td><%= ticket.username %></td>
+                          <td><%= new Date(ticket.created_at).toLocaleDateString() %></td>
+                          <td><%= ticket.subject %></td>
+                          <td><span class="status <%= ticket.status === 'open' ? 'waiting' : 'closed' %>"><%= ticket.status === 'open' ? 'Menunggu' : 'Tertutup' %></span></td>
+                          <td><a href="/pusat-bantuan/<%= ticket.ticket_id %>" class="help-link">...</a></td>
+                      </tr>
+                  <% }); %>
+              </tbody>
+          </table>
+        </div>
+    </div>
+</body>
+</html>

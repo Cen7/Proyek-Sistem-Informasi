@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusat Bantuan</title>
+    <link rel="stylesheet" href="css/pusat-bantuan2.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Pengajuan Lapak</a></li>
+                <li><a href="#">Lapak Terverifikasi</a></li>
+                <li><a href="#">Lapak Terblokir</a></li>
+                <li><a href="#">Pembaharuan Lapak</a></li>
+                <li><a href="#" class="active">Pusat Bantuan</a></li>
+                <li><a href="#">Keluar</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <header>
+                <h1>Pusat Bantuan</h1>
+            </header>
+            <div class="chat-box">
+                <div class="chat-header">
+                    <h3 id="chat-user">Leo</h3>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="chat-input">
+                    <label for="file-input">Tambah Foto</label>
+                    <input type="file" id="file-input">
+                    <input type="text" id="message-input" placeholder="Ketik pesan...">
+                    <button onclick="sendMessage()">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script/tes.js"></script>
+</body>
+</html>

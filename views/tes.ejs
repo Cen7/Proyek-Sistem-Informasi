@@ -1,27 +1,75 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="css/global-pengajuan.css" />
-    <link rel="stylesheet" href="css/admin-pengajuan.css" />
-
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-    />
-  </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pengajuan Bantuan</title>
+    <link rel="stylesheet" href="css/tes.css">
+</head>
 <body>
-
-    <%- include('./layout/sidebar.ejs') %>
-    <%- include('./layout/header.ejs') %>
-            
-
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Pengajuan Lapak</a></li>
+                <li><a href="#">Lapak Terverifikasi</a></li>
+                <li><a href="#">Lapak Terblokir</a></li>
+                <li><a href="#">Pembaharuan Lapak</a></li>
+                <li><a href="#" class="active">Pusat Bantuan</a></li>
+                <li><a href="#">Keluar</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <header>
+                <h1>Daftar Pengajuan Bantuan</h1>
+                <input type="search" placeholder="Search...">
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama User</th>
+                        <th>Tanggal Pengajuan</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Leo</td>
+                        <td>September 9, 2013</td>
+                        <td>Terjadi bug saat aplikasi dijalankan</td>
+                    </tr>
+                    <tr>
+                        <td>Gilbert</td>
+                        <td>August 2, 2013</td>
+                        <td>Ada error di bagian arahkan maps</td>
+                    </tr>
+                    <tr>
+                        <td>Wilson</td>
+                        <td>September 24, 2017</td>
+                        <td>Tidak bisa memberi review</td>
+                    </tr>
+                    <tr>
+                        <td>Kiko</td>
+                        <td>December 29, 2012</td>
+                        <td>Ada beberapa tampilan yang error</td>
+                    </tr>
+                    <tr>
+                        <td>Sava</td>
+                        <td>May 20, 2015</td>
+                        <td>Aplikasi nya lemot</td>
+                    </tr>
+                    <tr>
+                        <td>Kenzhi</td>
+                        <td>May 31, 2015</td>
+                        <td>Fitur untuk lapak masih kurang banyak</td>
+                    </tr>
+                    <tr>
+                        <td>Andrea</td>
+                        <td>February 29, 2012</td>
+                        <td>Ada bug di bagian upload foto</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

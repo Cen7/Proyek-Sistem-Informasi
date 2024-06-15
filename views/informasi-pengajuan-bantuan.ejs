@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Pengajuan Bantuan</title>
+    <link rel="stylesheet" href="css/informasi-pengajuan-bantuan.css">
+</head>
+
+<%- include('./layout/sidebar.ejs') %>
+<%- include('./layout/header.ejs') %>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Pengajuan Lapak</a></li>
+                <li><a href="#">Lapak Terverifikasi</a></li>
+                <li><a href="#">Lapak Terblokir</a></li>
+                <li><a href="#">Pembaharuan Lapak</a></li>
+                <li><a href="#" class="active">Pusat Bantuan</a></li>
+                <li><a href="#">Keluar</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <header>
+                <h1>Informasi Pengajuan Bantuan</h1>
+                <button class="btn-back">Kembali</button>
+            </header>
+            <div class="info-container">
+                <div class="user-info">
+                    <h2>Leo</h2>
+                    <p>September 9, 2013</p>
+                </div>
+                <div class="details">
+                    <div class="section">
+                        <h3>Keterangan Pengajuan Bantuan</h3>
+                        <p>Keterangan</p>
+                        <div class="description">
+                            Terjadi bug saat aplikasi dijalankan
+                            <img src="error-image.png" alt="Error" class="error-image">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3>Feedback</h3>
+                        <textarea placeholder="Keterangan bantuan terkait pengajuan ...."></textarea>
+                    </div>
+                    <button class="btn-submit">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
