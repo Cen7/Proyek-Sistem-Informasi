@@ -1,131 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/global-terverifikasi.css" />
+  <link rel="stylesheet" href="css/admin-terverifikasi.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+  />
+</head>
+<body>
+  <%- include('./layout/sidebar2.ejs') %>
+  <%- include('./layout/header-search.ejs', { searchAction: '/admin-terverifikasi', searchQuery: searchQuery }) %>
 
-    <link rel="stylesheet" href="css/global-terverifikasi.css" />
-    <link rel="stylesheet" href="css/admin-terverifikasi.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-    />
-  </head>
-  <body>
-    <%- include('./layout/sidebar.ejs') %>
-    <%- include('./layout/header.ejs') %>
-    
-    <table class="tabel-verifikasi-lapak">
-      <thead>
-        <tr class="informasi-table-verifikasi">
-          <th>Nama Lapak</th>
-          <th>Alamat</th>
-          <th class="ulasan">Ulasan</th>
-          <th>Total Laporan Terlampir</th>
-          <th>Total Laporan Tertunda</th>
-          <th>Laporan Tertunda</th>
-          <th>Status</th>
-          <th>Informasi Lapak</th>
-        </tr>
-      </thead>
-      <tbody>
-         <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr> 
-
+  <div class="h4-heading">All (<%= dataCount %>)</div>
+  <table class="tabel-verifikasi-lapak">
+    <thead>
+      <tr class="informasi-table-verifikasi">
+        <th>Nama Lapak</th>
+        <th>Alamat</th>
+        <th class="ulasan">Ulasan</th>
+        <th>Total Laporan Terlampir</th>
+        <th>Total Laporan Tertunda</th>
+        <th>Laporan Tertunda</th>
+        <th>Status</th>
+        <th>Informasi Lapak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% lapakList.forEach(lapak => { %>
         <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
+          <td><%= lapak.nama_lapak %></td>
+          <td><%= lapak.lokasi_lapak %></td>
+          <td class="deskripsi-table-verifikasi"><%= lapak.rata_rating.toFixed(2) %>/5</td>
+          <td class="deskripsi-table-verifikasi"><%= lapak.total_laporan %></td>
+          <td class="deskripsi-table-verifikasi"><%= lapak.total_laporan_tertunda %></td>
+          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-laporan-tertunda/<%= lapak.id_lapak %>'">
+            ...
           </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr> 
-
-        <tr>
-          <td>Cendol Bogo</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td  class="deskripsi-table-verifikasi">5/5</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">0</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
-          </td>
-          <td  class="deskripsi-table-verifikasi">Tutup</td>
-          <td  class="deskripsi-table-verifikasi">
-            <img src="../public/action-value@2x.png"/>
+          <td><span class="status"><%= lapak.status_lapak %></span></td>
+          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-terverifikasi/<%= lapak.id_lapak %>'">
+            ...
           </td>
         </tr> 
-      </tbody>
-    </table>
-    <footer class="tabel-footer">
-      <div class="rectangle-container">
-        <div class="frame-child1"></div>
-        <div class="frame-child2"></div>
-        <div class="frame-child3"></div>
-        <div class="frame-child4"></div>
-        <div class="rectangle-parent1">
-          <div class="frame-child5"></div>
-          <div class="empty-wrapper">
-            <div class="empty">1</div>
-          </div>
-        </div>
-        <div class="showing-1-to">Showing 1 to 10 of 50 entries</div>
-        <div class="display">Display</div>
-        <div class="div">10</div>
-        <div class="rectangle-parent2">
-          <div class="frame-child6"></div>
-          <div class="div1">2</div>
-        </div>
-        <div class="rectangle-parent3">
-          <div class="frame-child7"></div>
-          <div class="div2">3</div>
-        </div>
-        <div class="rectangle-parent4">
-          <div class="frame-child8"></div>
-          <div class="div3">4</div>
-        </div>
-        <img
-          class="chevron-right-icon"
-          loading="lazy"
-          alt=""
-          src="./public/chevronright.svg"
-        />
-
-        <img
-          class="chevron-right-icon1"
-          loading="lazy"
-          alt=""
-          src="./public/chevronright-1.svg"
-        />
-      </div>
-      <img class="tabel-footer-child" alt="" src="./public/group-203.svg" />
-
-      <div class="tabel-footer-item"></div>
-    </footer>
-  
-
-    <div class="h4-heading">All (3)</div>
-  </body>
+      <% }) %>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>&search=<%= searchQuery %>">&laquo;</a>
+    <% for (let i = 1; i <= pageCount; i++) { %>
+      <a href="?page=<%= i %>&search=<%= searchQuery %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+    <a href="?page=<%= currentPage < pageCount ? currentPage + 1 : pageCount %>&search=<%= searchQuery %>">&raquo;</a>
+  </div>
+</body>
 </html>

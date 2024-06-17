@@ -2148,7 +2148,7 @@
   margin: 0 !important;
   top: calc(50% - 8px);
   right: 23px;
-  overflow: hidden;
+  /* overflow: hidden; */
   flex-shrink: 0;
   z-index: 2;
 }
@@ -2182,7 +2182,7 @@
   bottom: 33.33%;
   left: 82.2%;
   max-width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   max-height: 100%;
   display: none;
 }
@@ -2725,7 +2725,7 @@ table {
   table-layout: fixed; /* Menentukan tata letak tabel tetap */
 }
 .tabel-pengajuan-lapak222 {
-  margin-top: 10%;
+  margin-top: 8.5%;
   margin-left: 17%;
 }
 th, td {
@@ -2753,9 +2753,52 @@ th:nth-child(4), td:nth-child(4) {
 }
 th:nth-child(5), td:nth-child(5) {
   width: 15%; /* Tentukan lebar kolom Informasi Lapak */
+  text-align: center;
 }
 /* .status {
   background-color: #DC3545;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px;
+  width: 100%;
 } */
 
+.status{
+  background-color: #DC3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 25px;
+}
+
+.info-lapak{
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+  border-radius: 5px;
+}
+
+.pagination a.active {
+  background-color: #DC3545;
+  color: white;
+  border: 1px solid #DC3545;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}

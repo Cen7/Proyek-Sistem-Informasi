@@ -1,3 +1,5 @@
+/* admin-pembaruan-verif.css */
+
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f8f8f8;
@@ -75,7 +77,7 @@ body {
 }
 
 .operating-hours-item input[type="radio"] {
-  display: none; /* Hide the actual radio button */
+  margin-right: 10px;
 }
 
 .time-box {
@@ -170,7 +172,7 @@ h2{
 p{
   margin: 0;
 }
-h3.judulIndentifikasi{
+h3{
   border-bottom: 1px solid black;
 }
 
@@ -185,6 +187,9 @@ h3.judulIndentifikasi{
   position: relative; /* Tambahkan position relative */
 }
 
+h2 {
+  margin: 0;
+}
 .back-btn {
   padding: 8px 16px;
   border: none;
@@ -202,26 +207,4 @@ h3.judulIndentifikasi{
 
 .back-btn:focus {
   outline: none; /* Hilangkan outline saat tombol mendapatkan fokus */
-}
-
-/* Gaya dasar untuk custom radio button */
-.custom-radio {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  display: inline-block;
-  position: relative;
-  margin-right: 10px;
-}
-
-/* Gaya ketika radio button checked dan disabled */
-input[type="radio"]:disabled:checked + .custom-radio {
-  background-color: #3bc83b;
-  border-color: #1dd31d;
-}
-
-/* Gaya ketika radio button disabled */
-input[type="radio"]:disabled + .custom-radio {
-  background-color: #ccc;
 }

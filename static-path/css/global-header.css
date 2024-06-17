@@ -9,7 +9,7 @@ body {
   :root {
     /* fonts */
     --base-body: Poppins;
-    --heading-h5-heading: Roboto;
+    --heading-h5-heading: Poppins;
   
     /* font sizes */
     --font-size-lgi: 19px;
@@ -68,3 +68,4 @@ body {
     /* Effects */
     --regular: 0px 8px 16px rgba(0, 0, 0, 0.15);
   }
+  

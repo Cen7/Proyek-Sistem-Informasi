@@ -1,183 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="css/global-pengajuan.css" />
-    <link rel="stylesheet" href="css/admin-pengajuan.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-    />
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/global-pengajuan.css" />
+  <link rel="stylesheet" href="css/admin-pengajuan.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+  />
+</head>
+<body>
   <%- include('./layout/sidebar.ejs') %>
-    <%- include('./layout/header.ejs') %>
-  <body>
-    
-    <table class="tabel-pengajuan-lapak222">
-      <thead>
-        <tr>
-          <th>Nama Lapak</th>
-          <th>Tanggal Pengajuan</th>
-          <th>Alamat</th>
-          <th>Status</th>
-          <th>Informasi Lapak</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Cendol Bogo</td>
-          <td>May 20, 2015</td>
-          <td>Jl. Bogo No.20, Burangrang, Kec. Lengkong, Kota Bandung</td>
-          <td>Menunggu</td>
-          <td>
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr>
-
-        <tr>
-          <td>Masakan Padang Cicendo</td>
-          <td>September 24, 2017</td>
-          <td>Jl. Cendana No.10, Cihapit, Kec. Bandung Wetan, Kota Bandung, Jawa Barat</td>
-          <td>Menunggu</td>
-          <td>
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr>
-
-        <tr>
-          <td>RM. Seafood Santosa</td>
-          <td>December 29, 2012</td>
-          <td>Jl. Aruna No.30, Arjuna, Kec. Cicendo, Kota Bandung</td>
-          <td>Menunggu</td>
-          <td>
-            <img src="../public/action-value@2x.png"/>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-        
-       
-      
-        <!-- <div class="status-value">
-          <div class="status-value-child"></div>
-          <div class="status-valuedanger-wrapper">
-            <div class="status-valuedanger">
-              <div class="danger">Menunggu</div>
-            </div>
-          </div>
-          <div class="status-value-item"></div>
-        </div> -->
-        
-        
-        <!-- <img
-          class="action-value-icon"
-          loading="lazy"
-          alt=""
-          src="./public/action-value@2x.png"
-        /> gambar informasi lapak -->
-
-        
-
-        <footer class="tabel-footer">
-          <div class="rectangle-container">
-            <div class="frame-child1"></div>
-            <div class="frame-child2"></div>
-            <div class="frame-child3"></div>
-            <div class="frame-child4"></div>
-            <div class="rectangle-parent1">
-              <div class="frame-child5"></div>
-              <div class="empty-wrapper">
-                <div class="empty">1</div>
-              </div>
-            </div>
-            <div class="showing-1-to">Showing 1 to 10 of 50 entries</div>
-            <div class="display">Display</div>
-            <div class="div">10</div>
-            <div class="rectangle-parent2">
-              <div class="frame-child6"></div>
-              <div class="div1">2</div>
-            </div>
-            <div class="rectangle-parent3">
-              <div class="frame-child7"></div>
-              <div class="div2">3</div>
-            </div>
-            <div class="rectangle-parent4">
-              <div class="frame-child8"></div>
-              <div class="div3">4</div>
-            </div>
-            <img
-              class="chevron-right-icon"
-              loading="lazy"
-              alt=""
-              src="./public/chevronright.svg"
-            />
-
-            <img
-              class="chevron-right-icon1"
-              loading="lazy"
-              alt=""
-              src="./public/chevronright-1.svg"
-            />
-          </div>
-          <img class="tabel-footer-child" alt="" src="./public/group-203.svg" />
-
-          <div class="tabel-footer-item"></div>
-        </footer>
-      
-
-        <div class="h4-heading">All (3)</div>
-        
-      </main>
-    </div>
-
-    <script>
-      var groupIcon = document.getElementById("groupIcon");
-      if (groupIcon) {
-        groupIcon.addEventListener("click", function (e) {
-          // Please sync "Pengajuan lapak filter" to the project
-        });
-      }
-      
-      var menuMultiContainer1 = document.getElementById("menuMultiContainer1");
-      if (menuMultiContainer1) {
-        menuMultiContainer1.addEventListener("click", function (e) {
-          // Please sync "List lapak" to the project
-        });
-      }
-      
-      var menuMultiContainer2 = document.getElementById("menuMultiContainer2");
-      if (menuMultiContainer2) {
-        menuMultiContainer2.addEventListener("click", function (e) {
-          // Please sync "Lapak Terblokir" to the project
-        });
-      }
-      
-      var menuMultiContainer3 = document.getElementById("menuMultiContainer3");
-      if (menuMultiContainer3) {
-        menuMultiContainer3.addEventListener("click", function (e) {
-          // Please sync "Pusat bantuan" to the project
-        });
-      }
-      
-      var menuMultiContainer4 = document.getElementById("menuMultiContainer4");
-      if (menuMultiContainer4) {
-        menuMultiContainer4.addEventListener("click", function (e) {
-          // Please sync "Pengajuan perubahan lapak" to the project
-        });
-      }
-      
-      var menuMultiContainer5 = document.getElementById("menuMultiContainer5");
-      if (menuMultiContainer5) {
-        menuMultiContainer5.addEventListener("click", function (e) {
-          // Please sync "login 1" to the project
-        });
-      }
-      </script>
-  </body>
+  <%- include('./layout/header-search.ejs', { searchAction: '/admin-pengajuan', searchQuery: searchQuery }) %>
+  <div class="h4-heading">All (<%= dataCount %>)</div>
+  <table class="tabel-pengajuan-lapak222">
+    <thead>
+      <tr>
+        <th>Nama Lapak</th>
+        <th>Tanggal Pengajuan</th>
+        <th>Alamat</th> 
+        <th>Status</th>
+        <th>Informasi Lapak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% lapakList.forEach(lapak => { %>
+      <tr>
+        <td><%= lapak.nama_lapak %></td>
+        <td><%= lapak.tanggal_pengajuan %></td>
+        <td><%= lapak.lokasi_lapak %></td>
+        <td><span class="status"><%= lapak.status_lapak %></span></td>
+        <td class="info-lapak" onclick="location.href='/admin-informasi-lapak-pengajuan/<%= lapak.id_lapak %>'">...</td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>&search=<%= searchQuery %>">&laquo;</a>
+    <% for (let i = 1; i <= pageCount; i++) { %>
+      <a href="?page=<%= i %>&search=<%= searchQuery %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+    <a href="?page=<%= currentPage < pageCount ? currentPage + 1 : pageCount %>&search=<%= searchQuery %>">&raquo;</a>
+  </div>
+</body>
 </html>
