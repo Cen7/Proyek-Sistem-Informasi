@@ -163,17 +163,71 @@ app.post("/signup", (req, res) => {
 });
 
 
+// app.get("/pusat-bantuan", (req, res) => {
+//   pool.query(
+//     `SELECT t.ticket_id, t.subject, t.created_at, t.status, u.username 
+//      FROM support_tickets t 
+//      JOIN pengguna u ON t.user_id = u.id_pengguna`,
+//     (error, results) => {
+//       if (error) throw error;
+//       res.render("pusat-bantuan", { tickets: results });
+//     }
+//   );
+// });
+
 app.get("/pusat-bantuan", (req, res) => {
-  pool.query(
-    `SELECT t.ticket_id, t.subject, t.created_at, t.status, u.username 
-     FROM support_tickets t 
-     JOIN pengguna u ON t.user_id = u.id_pengguna`,
-    (error, results) => {
-      if (error) throw error;
-      res.render("pusat-bantuan", { tickets: results });
+  const currentPage = parseInt(req.query.page) || 1;
+  const itemsPerPage = 8;
+  const offset = (currentPage - 1) * itemsPerPage;
+  const searchQuery = req.query.search || "";
+
+  let countQuery = "SELECT COUNT(*) AS count FROM support_tickets t JOIN pengguna u ON t.user_id = u.id_pengguna";
+  let dataQuery = `
+    SELECT t.ticket_id, t.subject, t.created_at, t.status, u.username 
+    FROM support_tickets t 
+    JOIN pengguna u ON t.user_id = u.id_pengguna
+  `;
+
+  if (searchQuery) {
+    countQuery += " WHERE t.subject LIKE ? OR u.username LIKE ?";
+    dataQuery += " WHERE t.subject LIKE ? OR u.username LIKE ?";
+  }
+
+  dataQuery += " LIMIT ? OFFSET ?";
+
+  const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
+  const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+
+  pool.query(countQuery, countParams, (err, countResult) => {
+    if (err) {
+      console.error("Error executing count query:", err.message);
+      res.sendStatus(500);
+      return;
     }
-  );
+
+    const totalCount = countResult[0].count;
+    const pageCount = Math.ceil(totalCount / itemsPerPage);
+
+    pool.query(dataQuery, dataParams, (error, results) => {
+      if (error) {
+        console.error("Error executing data query:", error.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.render("pusat-bantuan", {
+        pageTitle: 'Pusat Bantuan',
+        tickets: results,
+        dataCount: totalCount,
+        pageCount: pageCount,
+        currentPage: currentPage,
+        searchQuery: searchQuery,
+        searchAction: '/pusat-bantuan'
+      });
+    });
+  });
 });
+
 
 app.get("/pusat-bantuan/:id", (req, res) => {
   const ticketId = req.params.id;
@@ -203,22 +257,106 @@ app.get("/pusat-bantuan/:id", (req, res) => {
 });
 
 
+// app.post("/send-message", (req, res) => {
+//   const { text } = req.body;
+//   const ticketId = req.query.ticketId; 
+//   const senderId = req.session.user.id; 
+//   const senderType = "admin";
+
+//   pool.query(
+//     `INSERT INTO messages (ticket_id, sender_id, sender_type, message, created_at) 
+//      VALUES (?, ?, ?, ?, NOW())`,
+//     [ticketId, senderId, senderType, text],
+//     (error) => {
+//       if (error) throw error;
+//       res.sendStatus(200);
+//     }
+//   );
+// });
+
 app.post("/send-message", (req, res) => {
   const { text } = req.body;
   const ticketId = req.query.ticketId; 
   const senderId = req.session.user.id; 
   const senderType = "admin";
 
-  pool.query(
-    `INSERT INTO messages (ticket_id, sender_id, sender_type, message, created_at) 
-     VALUES (?, ?, ?, ?, NOW())`,
-    [ticketId, senderId, senderType, text],
-    (error) => {
-      if (error) throw error;
-      res.sendStatus(200);
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
+      return;
     }
-  );
+
+    connection.beginTransaction((err) => {
+      if (err) {
+        connection.release();
+        console.error("Error starting transaction:", err.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      // Insert the message
+      const insertMessageQuery = `
+        INSERT INTO messages (ticket_id, sender_id, sender_type, message, created_at) 
+        VALUES (?, ?, ?, ?, NOW())
+      `;
+
+      connection.query(insertMessageQuery, [ticketId, senderId, senderType, text], (error) => {
+        if (error) {
+          return connection.rollback(() => {
+            connection.release();
+            console.error("Error inserting message:", error.message);
+            res.sendStatus(500);
+          });
+        }
+
+        if (text === "/selesai") {
+          const updateTicketQuery = `
+            UPDATE support_tickets 
+            SET status = 'closed' 
+            WHERE ticket_id = ?
+          `;
+
+          connection.query(updateTicketQuery, [ticketId], (error) => {
+            if (error) {
+              return connection.rollback(() => {
+                connection.release();
+                console.error("Error updating ticket status:", error.message);
+                res.sendStatus(500);
+              });
+            }
+
+            connection.commit((err) => {
+              connection.release();
+              if (err) {
+                return connection.rollback(() => {
+                  console.error("Error committing transaction:", err.message);
+                  res.sendStatus(500);
+                });
+              }
+
+              res.sendStatus(200);
+            });
+          });
+        } else {
+          connection.commit((err) => {
+            connection.release();
+            if (err) {
+              return connection.rollback(() => {
+                console.error("Error committing transaction:", err.message);
+                res.sendStatus(500);
+              });
+            }
+
+            res.sendStatus(200);
+          });
+        }
+      });
+    });
+  });
 });
+
+
 
 app.post("/send-photo", upload.single('photo'), (req, res) => {
   const ticketId = req.query.ticketId;

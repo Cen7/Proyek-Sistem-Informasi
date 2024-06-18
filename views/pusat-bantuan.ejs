@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pengajuan Bantuan</title>
     <link rel="stylesheet" href="css/pusat-bantuan.css" />
+    <link rel="stylesheet" href="css/global-pengajuan.css" />
+    <link rel="stylesheet" href="css/admin-pengajuan.css" />
 </head>
-
-
-
 <body>
+    <%- include('./layout/sidebar-pusat-bantuan.ejs') %>
+    <%- include('./layout/header-search.ejs', { searchAction: '/pusat-bantuan', searchQuery: searchQuery }) %>
+
     <div class="container">
         <nav class="sidebar">
             <ul>
@@ -24,30 +26,41 @@
         <div class="main-content">
             <header>
                 <h1>Daftar Pengajuan Bantuan</h1>
-                <input type="search" placeholder="Search...">
+                <form action="<%= searchAction %>" method="GET">
+                    <input type="search" name="search" placeholder="Search..." value="<%= searchQuery %>">
+                    <button type="submit">Cari</button>
+                </form>
             </header>
+            <div class="h4-heading">Total (<%= dataCount %>)</div>
             <table>
-              <thead>
-                  <tr>
-                      <th>Nama User</th>
-                      <th>Tanggal Pengajuan</th>
-                      <th>Keterangan</th>
-                      <th>Status</th>
-                      <th>Bantuan</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <% tickets.forEach(ticket => { %>
-                      <tr>
-                          <td><%= ticket.username %></td>
-                          <td><%= new Date(ticket.created_at).toLocaleDateString() %></td>
-                          <td><%= ticket.subject %></td>
-                          <td><span class="status <%= ticket.status === 'open' ? 'waiting' : 'closed' %>"><%= ticket.status === 'open' ? 'Menunggu' : 'Tertutup' %></span></td>
-                          <td><a href="/pusat-bantuan/<%= ticket.ticket_id %>" class="help-link">...</a></td>
-                      </tr>
-                  <% }); %>
-              </tbody>
-          </table>
+                <thead>
+                    <tr>
+                        <th>Nama User</th>
+                        <th>Tanggal Pengajuan</th>
+                        <th>Keterangan</th>
+                        <th>Status</th>
+                        <th>Bantuan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% tickets.forEach(ticket => { %>
+                        <tr>
+                            <td><%= ticket.username %></td>
+                            <td><%= new Date(ticket.created_at).toLocaleDateString() %></td>
+                            <td><%= ticket.subject %></td>
+                            <td><span class="status <%= ticket.status === 'open' ? 'waiting' : 'closed' %>"><%= ticket.status === 'open' ? 'Menunggu' : 'Tertutup' %></span></td>
+                            <td><a href="/pusat-bantuan/<%= ticket.ticket_id %>" class="help-link">...</a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>&search=<%= searchQuery %>">&laquo;</a>
+                <% for (let i = 1; i <= pageCount; i++) { %>
+                    <a href="?page=<%= i %>&search=<%= searchQuery %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <% } %>
+                <a href="?page=<%= currentPage < pageCount ? currentPage + 1 : pageCount %>&search=<%= searchQuery %>">&raquo;</a>
+            </div>
         </div>
     </div>
 </body>
