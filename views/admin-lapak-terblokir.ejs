@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/global-pengajuan.css" />
+  <link rel="stylesheet" href="css/admin-pengajuan.css" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+  />
+</head>
+<body>
+  <%- include('./layout/sidebar.ejs') %>
+  <%- include('./layout/header.ejs') %>
+  <div class="h4-heading">All (<%= dataCount %>)</div>
+  <table class="tabel-pengajuan-lapak222">
+    <thead>
+      <tr>
+        <th>Nama Lapak</th>
+        <th>Tanggal Blokir</th>
+        <th>Alamat</th> 
+        <th>Status</th>
+        <th>Informasi Lapak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% lapakList.forEach(lapak => { %>
+      <tr>
+        <td><%= lapak.nama_lapak %></td>
+        <td><%= lapak.tanggal_terblokir %></td>
+        <td><%= lapak.lokasi_lapak %></td>
+        <td><span class="status"><%= lapak.status_lapak %></span></td>
+        <td class="info-lapak" onclick="location.href='/admin-informasi-lapak-terblokir/<%= lapak.id_lapak %>'">...</td>
+        
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>">&laquo;</a>
+    <% for (let i = 1; i <= pageCount; i++) { %>
+      <a href="?page=<%= i %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+    <a href="?page=<%= currentPage < pageCount ? currentPage + 1 : pageCount %>">&raquo;</a>
+  </div>
+</body>
+</html>
