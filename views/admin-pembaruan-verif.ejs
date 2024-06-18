@@ -12,20 +12,25 @@
 </head>
 
 <body>
-  <%- include('./layout/sidebar.ejs') %>
+  <%- include('./layout/sidebar4.ejs') %>
     <%- include('./layout/header.ejs') %>
       <div class="main-content">
         <div class="container">
-          <h2>
-            <%= lapak.nama_lapak %>
-          </h2>
-          <p>
-            <%= lapak.lokasi_lapak %>
-          </p>
-          <a href="/admin-pembaruan">
-            <button class="back-btn">Kembali</button>
-          </a>
-
+          <div class="heading123">
+            <div>
+              <h2>
+                <%= lapak.nama_lapak %>
+              </h2>
+              <p>
+                <%= lapak.lokasi_lapak %>
+              </p>
+            </div>
+            <div class="back">
+              <a href="/admin-pembaruan">
+                <button class="back-btn">Kembali</button>
+              </a>
+            </div>
+          </div>
           <div class="content">
             <div class="column">
               <div class="info-section">
@@ -52,12 +57,6 @@
                   <p>
                     <%= lapak.layanan %>
                   </p>
-                </div>
-                <div class="section">
-                  <h3>Foto Lapak</h3>
-                  <div class="image-container">
-                    <img src="/<%= lapak.foto_lapak %>" alt="Foto Lapak" class="lapak-photo">
-                  </div>
                 </div>
               </div>
             </div>
@@ -110,11 +109,6 @@
                               <%= lapak.kategori_lapak_pembaruan %>
                             </p>
                             <% } %>
-                              <% if (lapak.foto_lapak_pembaruan) { %>
-                                <p><strong>Foto Lapak:</strong>
-                                  <%= lapak.foto_lapak_pembaruan %>
-                                </p>
-                                <% } %>
                                   <% if (lapak.nomor_telepon_pembaruan) { %>
                                     <p><strong>No Telepon Lapak:</strong>
                                       <%= lapak.nomor_telepon_pembaruan %>

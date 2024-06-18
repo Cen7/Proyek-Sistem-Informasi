@@ -5,6 +5,7 @@ body {
   background-color: #f8f8f8;
   margin: 0;
   padding: 0;
+  font-size: 14px;
 }
 
 .main-content {
@@ -17,17 +18,18 @@ body {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 .header-title h1 {
-  font-size: 24px;
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
 .content {
   display: flex;
   justify-content: space-between;
+  font-size: 14px;
 }
 
 .column {
@@ -67,7 +69,7 @@ body {
 }
 
 .operating-hours-item {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .operating-hours-item label {
@@ -82,9 +84,9 @@ body {
 
 .time-box {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 3px 10px;
   border-radius: 4px;
-  margin-top: 5px;
+  margin-top: 0px;
   width: 50px;
 }
 
@@ -129,7 +131,7 @@ body {
 
 .action-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -143,12 +145,12 @@ body {
 }
 
 .reject-btn {
-  background-color: #e74c3c;
+  background-color: #E31D1D;
   color: white;
 }
 
 .accept-btn {
-  background-color: #2ecc71;
+  background-color: #0FC20B;
   color: white;
 }
 
@@ -178,27 +180,33 @@ h3{
 
 .back-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 80px;
+  right: 20px;
   margin: 20px;
+  
 }
+
+.heading123{
+  display: flex;
+}
+
 
 .header-title {
   position: relative; /* Tambahkan position relative */
 }
-
+.h4-heading1{
+  border-bottom : 0px solid black;
+}
 h2 {
   margin: 0;
 }
 .back-btn {
-  padding: 8px 16px;
+  background-color: #636881;
+  color: #fff;
   border: none;
-  border-radius: 4px;
-  background-color: #969696d7; /* Warna latar belakang */
-  color: #fff; /* Warna teks */
-  font-size: 18px;
+  padding: 10px 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Efek transisi ketika tombol dihover */
+  border-radius: 10px;/* Efek transisi ketika tombol dihover */
 }
 
 .back-btn:hover {
