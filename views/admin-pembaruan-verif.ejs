@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="/css/global-pembaruan-verif.css">
+  <link rel="stylesheet" href="/css/admin-pembaruan-verif.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+
+</head>
+
+<body>
+  <%- include('./layout/sidebar4.ejs') %>
+    <%- include('./layout/header.ejs') %>
+      <div class="main-content">
+        <div class="container">
+          <div class="heading123">
+            <div>
+              <h2>
+                <%= lapak.nama_lapak %>
+              </h2>
+              <p>
+                <%= lapak.lokasi_lapak %>
+              </p>
+            </div>
+            <div class="back">
+              <a href="/admin-pembaruan">
+                <button class="back-btn">Kembali</button>
+              </a>
+            </div>
+          </div>
+          <div class="content">
+            <div class="column">
+              <div class="info-section">
+                <div class="section">
+                  <h3>Tentang Lapak</h3>
+                  <p><strong>Nama Lapak:</strong>
+                    <%= lapak.nama_lapak %>
+                  </p>
+                  <p><strong>Kategori Bisnis:</strong>
+                    <%= lapak.kategori_lapak %>
+                  </p>
+                  <p><strong>Deskripsi Lapak:</strong>
+                    <%= lapak.deskripsi_lapak %>
+                  </p>
+                </div>
+                <div class="section">
+                  <h3>Lokasi</h3>
+                  <p><strong>Lokasi Lapak:</strong>
+                    <%= lapak.lokasi_lapak %>
+                  </p>
+                </div>
+                <div class="section">
+                  <h3>Layanan</h3>
+                  <p>
+                    <%= lapak.layanan %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-section">
+                <div class="section">
+                  <h3>Jam Buka</h3>
+                  <% if (lapak.jam_buka && lapak.jam_buka.length> 0) { %>
+                    <form class="operating-hours-form">
+                      <% lapak.jam_buka.forEach((jam, index)=> { %>
+                        <div class="operating-hours-item">
+                          <div class="radio-container">
+                            <label>
+                              <%= jam.hari %>:
+                            </label>
+                            <input type="radio" name="<%= jam.hari %>" value="buka" checked disabled>
+                            <span class="time-box">Buka</span>
+                            <input type="radio" name="<%= jam.hari %>" value="tutup" disabled>
+                            <span class="time-box">Tutup</span>
+                          </div>
+                          <div class="time-range">
+                            <%= jam.jam_buka %> - <%= jam.jam_tutup %>
+                          </div>
+                        </div>
+                        <% }) %>
+                    </form>
+                    <% } else { %>
+                      <p>Data jam buka tidak ditemukan untuk lapak ini.</p>
+                      <% } %>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-section">
+                <div class="section">
+                  <h3>Daftar Perubahan</h3>
+
+                  <% if (lapak.nama_lapak_pembaruan) { %>
+                    <p><strong>Nama Lapak:</strong>
+                      <%= lapak.nama_lapak_pembaruan %>
+                    </p>
+                    <% } %>
+                      <% if (lapak.deskripsi_lapak_pembaruan) { %>
+                        <p><strong>Deskripsi Lapak:</strong>
+                          <%= lapak.deskripsi_lapak_pembaruan %>
+                        </p>
+                        <% } %>
+                          <% if (lapak.kategori_lapak_pembaruan) { %>
+                            <p><strong>Kategori Lapak:</strong>
+                              <%= lapak.kategori_lapak_pembaruan %>
+                            </p>
+                            <% } %>
+                                  <% if (lapak.nomor_telepon_pembaruan) { %>
+                                    <p><strong>No Telepon Lapak:</strong>
+                                      <%= lapak.nomor_telepon_pembaruan %>
+                                    </p>
+                                    <% } %>
+                                      <% if (lapak.situs_pembaruan) { %>
+                                        <p><strong>Situs Lapak:</strong>
+                                          <%= lapak.situs_pembaruan %>
+                                        </p>
+                                        <% } %>
+                                          <% if (lapak.layanan_pembaruan) { %>
+                                            <p><strong>Layanan Lapak:</strong>
+                                              <%= lapak.layanan_pembaruan %>
+                                            </p>
+                                            <% } %>
+
+                                              <% if (lapak.jam_buka_pembaruan && lapak.jam_buka_pembaruan.length> 0) { %>
+                                                <p><strong>Jam Buka:</strong>
+                                                  <% lapak.jam_buka_pembaruan.forEach((jam, index)=> { %>
+                                                    <%= jam.hari %> - Buka <%= jam.jam_buka %> - <%= jam.jam_tutup %>
+                                                          <br>
+                                                          <% }) %>
+                                                </p>
+                                                <% } %>
+
+
+                </div>
+
+
+                <div class="section">
+                  <div class="action-buttons">
+                    <form action="/admin-informasi-lapak-pembaruan/<%= lapak.id_pembaruan %>/accept" method="POST">
+                      <button type="submit" class="accept-btn">Terima Perubahan</button>
+                    </form>
+                    <form action="/admin-informasi-lapak-pembaruan/<%= lapak.id_pembaruan %>/reject" method="POST">
+                      <button type="submit" class="reject-btn">Tolak Perubahan</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup HTML -->
+      <div id="popup" class="popup">
+        <div class="popup-content">
+          <p id="popup-message"></p>
+          <button id="popup-button">Kembali ke Daftar Pengajuan</button>
+        </div>
+      </div>
+
+      <script>
+        function showPopup(message) {
+          const popup = document.getElementById('popup');
+          const popupMessage = document.getElementById('popup-message');
+          popupMessage.textContent = message;
+          popup.style.display = 'flex';
+        }
+
+        document.getElementById('popup-button').addEventListener('click', function () {
+          window.location.href = '/admin-pembaruan';
+        });
+      </script>
+</body>
+
+</html>
