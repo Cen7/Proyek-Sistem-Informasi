@@ -3,7 +3,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import mysql from "mysql";
 import moment from "moment";
-import moment from "moment";
 
 const port = 8080;
 const app = express();
@@ -88,8 +87,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  const { nama_lengkap, username, email, password, confirm_password } = req.body;
-  const { nama_lengkap, username, email, password, confirm_password } = req.body;
+  const { fullname, username, email, password, confirm_password } = req.body;
 
   if (password !== confirm_password) {
     return res.status(400).send("Password dan konfirmasi password tidak cocok.");
@@ -102,10 +100,8 @@ app.post("/signup", (req, res) => {
       return;
     }
 
-    const query = "INSERT INTO pengguna (nama_lengkap, username, email, password) VALUES (?, ?, ?, ?)";
-    connection.query(query, [nama_lengkap, username, email, password], (err, results) => {
-    const query = "INSERT INTO pengguna (nama_lengkap, username, email, password) VALUES (?, ?, ?, ?)";
-    connection.query(query, [nama_lengkap, username, email, password], (err, results) => {
+    const query = "INSERT INTO pengguna (fullname, username, email, password) VALUES (?, ?, ?, ?)";
+    connection.query(query, [fullname, username, email, password], (err, results) => {
       connection.release();
 
       if (err) {
@@ -609,9 +605,26 @@ app.get("/admin-lapak-terblokir", (req, res) => {
     const currentPage = parseInt(req.query.page) || 1;
     const itemsPerPage = 8;
     const offset = (currentPage - 1) * itemsPerPage;
+    const searchQuery = req.query.search || "";
 
-    const countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terblokir'";
-    connection.query(countQuery, (err, countResult) => {
+    let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terblokir'";
+    let dataQuery = `
+      SELECT id_lapak, nama_lapak, tanggal_terblokir, lokasi_lapak, status_lapak 
+      FROM lapak 
+      WHERE status_lapak ='terblokir'
+    `;
+
+    if (searchQuery) {
+      countQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+      dataQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+    }
+
+    dataQuery += " LIMIT ? OFFSET ?";
+
+    const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
+    const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+
+    connection.query(countQuery, countParams, (err, countResult) => {
       if (err) {
         console.error("Error executing count query:", err.message);
         res.sendStatus(500);
@@ -621,13 +634,7 @@ app.get("/admin-lapak-terblokir", (req, res) => {
       const totalCount = countResult[0].count;
       const pageCount = Math.ceil(totalCount / itemsPerPage);
 
-      const query = `
-        SELECT id_lapak, nama_lapak, tanggal_terblokir, lokasi_lapak, status_lapak 
-        FROM lapak 
-        WHERE status_lapak ='terblokir'
-        LIMIT ? OFFSET ?`;
-
-      connection.query(query, [itemsPerPage, offset], (err, results) => {
+      connection.query(dataQuery, dataParams, (err, results) => {
         connection.release();
 
         if (err) {
@@ -645,7 +652,9 @@ app.get("/admin-lapak-terblokir", (req, res) => {
           lapakList: results,
           dataCount: totalCount,
           pageCount: pageCount,
-          currentPage: currentPage
+          currentPage: currentPage,
+          searchQuery: searchQuery,
+          searchAction: '/admin-lapak-terblokir'
         });
       });
     });
