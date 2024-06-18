@@ -604,9 +604,26 @@ app.get("/admin-lapak-terblokir", (req, res) => {
     const currentPage = parseInt(req.query.page) || 1;
     const itemsPerPage = 8;
     const offset = (currentPage - 1) * itemsPerPage;
+    const searchQuery = req.query.search || "";
 
-    const countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terblokir'";
-    connection.query(countQuery, (err, countResult) => {
+    let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terblokir'";
+    let dataQuery = `
+      SELECT id_lapak, nama_lapak, tanggal_terblokir, lokasi_lapak, status_lapak 
+      FROM lapak 
+      WHERE status_lapak ='terblokir'
+    `;
+
+    if (searchQuery) {
+      countQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+      dataQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+    }
+
+    dataQuery += " LIMIT ? OFFSET ?";
+
+    const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
+    const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+
+    connection.query(countQuery, countParams, (err, countResult) => {
       if (err) {
         console.error("Error executing count query:", err.message);
         res.sendStatus(500);
@@ -616,13 +633,7 @@ app.get("/admin-lapak-terblokir", (req, res) => {
       const totalCount = countResult[0].count;
       const pageCount = Math.ceil(totalCount / itemsPerPage);
 
-      const query = `
-        SELECT id_lapak, nama_lapak, tanggal_terblokir, lokasi_lapak, status_lapak 
-        FROM lapak 
-        WHERE status_lapak ='terblokir'
-        LIMIT ? OFFSET ?`;
-
-      connection.query(query, [itemsPerPage, offset], (err, results) => {
+      connection.query(dataQuery, dataParams, (err, results) => {
         connection.release();
 
         if (err) {
@@ -640,7 +651,9 @@ app.get("/admin-lapak-terblokir", (req, res) => {
           lapakList: results,
           dataCount: totalCount,
           pageCount: pageCount,
-          currentPage: currentPage
+          currentPage: currentPage,
+          searchQuery: searchQuery,
+          searchAction: '/admin-lapak-terblokir'
         });
       });
     });
