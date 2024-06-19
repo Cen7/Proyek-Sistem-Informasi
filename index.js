@@ -733,55 +733,30 @@ app.get("/admin-informasi-lapak-terblokir/:id_lapak", (req, res) => {
               return;
             }
 
-
-            connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
-              connection.release();
-
-              if (err) {
-                console.error('Error fetching buka data:', err);
-                res.status(500).send('Server error');
-                return;
-              }
-
-              const formattedBukaResults = bukaResults.map(result => {
-                return {
-                  hari: result.nama_hari,
-                  jam_buka: result.jam_buka,
-                  jam_tutup: result.jam_tutup
-                };
-              });
-
-              updatedLapak.jam_buka = formattedBukaResults;
-              res.render("admin-informasi-lapak-terblokir", { lapak: updatedLapak, pageTitle: 'Informasi Blokir Lapak' });
-            });
+            const updatedLapak = updatedLapakResults[0];
+            res.render("admin-informasi-lapak-terblokir", { lapak: updatedLapak, pageTitle: 'Informasi Blokir Lapak' });
+            connection.release();
           });
         });
       } else {
-        const bukaQuery = `
-          SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
-          FROM buka
-          JOIN hari ON buka.id_hari = hari.id_hari
-          WHERE buka.id_lapak = ?
+        const laporanQuery = `
+          SELECT pengguna.nama_lengkap, laporan_lapak.alasan_lapak, laporan_lapak.foto
+          FROM laporan
+          JOIN laporan_lapak ON laporan.id_laporan = laporan_lapak.id_laporan
+          JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
+          WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
         `;
-        connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
-          connection.release();
 
+        connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
           if (err) {
-            console.error('Error fetching buka data:', err);
+            console.error('Error fetching laporan data:', err);
             res.status(500).send('Server error');
+            connection.release();
             return;
           }
 
-          const formattedBukaResults = bukaResults.map(result => {
-            return {
-              hari: result.nama_hari,
-              jam_buka: result.jam_buka,
-              jam_tutup: result.jam_tutup
-            };
-          });
-
-          lapak.jam_buka = formattedBukaResults;
-          res.render("admin-informasi-lapak-terblokir", { lapak, pageTitle: 'Informasi Blokir Lapak' });
+          res.render("admin-informasi-lapak-terblokir", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
+          connection.release();
         });
       }
     });
