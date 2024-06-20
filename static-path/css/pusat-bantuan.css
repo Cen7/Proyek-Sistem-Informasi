@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
@@ -85,17 +85,30 @@ body {
   }
   
   .status.waiting {
-    background-color: #e74c3c;
+    background-color: #DC3545;
+    border-radius: 25px;
+    min-width: 70px;
+    text-align: center;
+    font-weight: lighter;
   }
 
   .status.closed {
-    background-color: green;
+    background-color: #0FC20B;
+    border-radius: 25px;
+    width: 70px;
+    text-align: center;
+    font-weight: lighter;
   }
   
   .help-link {
     text-decoration: none;
-    color: #333;
+    color: #000;
     font-size: 24px;
+    margin-left: 45%;
+  }
+
+  .Bantuan{
+    text-align: center;
   }
   
   
