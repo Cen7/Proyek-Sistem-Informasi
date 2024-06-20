@@ -73,6 +73,19 @@
   .mid-column h3, p{
     margin-bottom: 6px;
   }
+
+  .report-image {
+    width: 25%;
+    margin-bottom: 10px;
+  }
+
+  .profile-report{
+    margin-right: 3px;
+  }
+
+  .mid-column{
+    margin-right: 15px;
+  }
   
   .right-column h3, p{
     margin-bottom: 6px;
@@ -111,7 +124,6 @@
   }
   
   .accept-button {
-    margin-left: 10%;
     background-color: #0FC20B;
     border-radius: 10px;
   }
@@ -133,6 +145,30 @@
     font-size: 14px;
     margin-bottom: 1.5%;
   }
+
+  .alasan-blokir{
+    width: 80%;
+    height: 20%;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #636881; /* Matching the sidebar color */
+    color: white;
+    border-radius: 10px;
+    resize: none;  
+}
+
+.keterangan-blokir{
+  width: 80%;
+  height: 20%;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #636881; /* Matching the sidebar color */
+  color: white;
+  border-radius: 10px;
+  resize: none;  
+}
   
   .header{
     display: flex;
