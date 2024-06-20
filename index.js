@@ -28,7 +28,7 @@ const pool = mysql.createPool({
   multipleStatements: true,
   user: "root",
   password: "",
-  database: "prosi",
+  database: "pepek",
   host: "127.0.0.1",
 });
 
