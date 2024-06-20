@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pengajuan Bantuan</title>
     <link rel="stylesheet" href="css/pusat-bantuan.css" />
-    <link rel="stylesheet" href="css/global-pengajuan.css" />
-    <link rel="stylesheet" href="css/admin-pengajuan.css" />
+ 
 </head>
 <body>
     <%- include('./layout/sidebar-pusat-bantuan.ejs') %>
@@ -48,7 +47,7 @@
                             <td><%= ticket.username %></td>
                             <td><%= new Date(ticket.created_at).toLocaleDateString() %></td>
                             <td><%= ticket.subject %></td>
-                            <td><span class="status <%= ticket.status === 'open' ? 'waiting' : 'closed' %>"><%= ticket.status === 'open' ? 'Menunggu' : 'Tertutup' %></span></td>
+                            <td><span class="status <%= ticket.status === 'open' ? 'waiting' : 'closed' %>"><%= ticket.status === 'open' ? 'ongoing' : 'selesai' %></span></td>
                             <td><a href="/pusat-bantuan/<%= ticket.ticket_id %>" class="help-link">...</a></td>
                         </tr>
                     <% }); %>
