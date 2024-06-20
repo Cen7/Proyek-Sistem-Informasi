@@ -290,7 +290,6 @@ app.post('/admin-informasi-lapak-pengajuan/:id_lapak/accept', (req, res) => {
   });
 });
 
-// Tambahkan rute untuk menolak lapak
 app.post('/admin-informasi-lapak-pengajuan/:id_lapak/reject', (req, res) => {
   const idLapak = parseInt(req.params.id_lapak);
 
@@ -308,40 +307,96 @@ app.post('/admin-informasi-lapak-pengajuan/:id_lapak/reject', (req, res) => {
         return;
       }
 
+      const deleteLaporanUlasanQuery = `
+        DELETE FROM laporan_ulasan 
+        WHERE id_laporan IN (SELECT id_laporan FROM laporan WHERE id_lapak = ?)
+      `;
+      const deleteLaporanLapakQuery = `
+        DELETE FROM laporan_lapak 
+        WHERE id_laporan IN (SELECT id_laporan FROM laporan WHERE id_lapak = ?)
+      `;
+      const deleteLaporanQuery = 'DELETE FROM laporan WHERE id_lapak = ?';
+      const deleteBukaPembaruanQuery = 'DELETE FROM buka_pembaruan WHERE id_lapak = ?';
+      const deletePembaruanLapakQuery = 'DELETE FROM pembaruan_lapak WHERE id_lapak = ?';
       const deleteBukaQuery = 'DELETE FROM buka WHERE id_lapak = ?';
-      connection.query(deleteBukaQuery, [idLapak], (err, results) => {
+      const deleteLapakQuery = 'DELETE FROM lapak WHERE id_lapak = ?';
+
+      connection.query(deleteLaporanUlasanQuery, [idLapak], (err, results) => {
         if (err) {
           return connection.rollback(() => {
-            console.error('Error deleting from buka:', err);
+            console.error('Error deleting from laporan_ulasan:', err);
             res.status(500).send('Server error');
           });
         }
 
-        const deleteLapakQuery = 'DELETE FROM lapak WHERE id_lapak = ?';
-        connection.query(deleteLapakQuery, [idLapak], (err, results) => {
+        connection.query(deleteLaporanLapakQuery, [idLapak], (err, results) => {
           if (err) {
             return connection.rollback(() => {
-              console.error('Error deleting from lapak:', err);
+              console.error('Error deleting from laporan_lapak:', err);
               res.status(500).send('Server error');
             });
           }
 
-          connection.commit(err => {
+          connection.query(deleteLaporanQuery, [idLapak], (err, results) => {
             if (err) {
               return connection.rollback(() => {
-                console.error('Error committing transaction:', err);
+                console.error('Error deleting from laporan:', err);
                 res.status(500).send('Server error');
               });
             }
 
-            res.sendStatus(200);
+            connection.query(deleteBukaPembaruanQuery, [idLapak], (err, results) => {
+              if (err) {
+                return connection.rollback(() => {
+                  console.error('Error deleting from buka_pembaruan:', err);
+                  res.status(500).send('Server error');
+                });
+              }
+
+              connection.query(deletePembaruanLapakQuery, [idLapak], (err, results) => {
+                if (err) {
+                  return connection.rollback(() => {
+                    console.error('Error deleting from pembaruan_lapak:', err);
+                    res.status(500).send('Server error');
+                  });
+                }
+
+                connection.query(deleteBukaQuery, [idLapak], (err, results) => {
+                  if (err) {
+                    return connection.rollback(() => {
+                      console.error('Error deleting from buka:', err);
+                      res.status(500).send('Server error');
+                    });
+                  }
+
+                  connection.query(deleteLapakQuery, [idLapak], (err, results) => {
+                    if (err) {
+                      return connection.rollback(() => {
+                        console.error('Error deleting from lapak:', err);
+                        res.status(500).send('Server error');
+                      });
+                    }
+
+                    connection.commit(err => {
+                      if (err) {
+                        return connection.rollback(() => {
+                          console.error('Error committing transaction:', err);
+                          res.status(500).send('Server error');
+                        });
+                      }
+
+                      res.sendStatus(200);
+                    });
+                  });
+                });
+              });
+            });
           });
         });
       });
     });
   });
 });
-
 
 app.get("/admin-terverifikasi", (req, res) => {
   pool.getConnection((err, connection) => {
