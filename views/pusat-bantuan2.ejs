@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusat Bantuan</title>
+    <link rel="stylesheet" href="/css/pusat-bantuan2.css">
+</head>
+<body>
+    <%- include('./layout/sidebar-pusat-bantuan.ejs') %>
+    
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Pengajuan Lapak</a></li>
+                <li><a href="#">Lapak Terverifikasi</a></li>
+                <li><a href="#">Lapak Terblokir</a></li>
+                <li><a href="#">Pembaharuan Lapak</a></li>
+                <li><a href="#" class="active">Pusat Bantuan</a></li>
+                <li><a href="#">Keluar</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <header>
+                <h1>Pusat Bantuan</h1>
+                <form >
+                    
+                </form>
+            </header>
+            <div class="chat-box">
+                <div class="chat-header">
+                    <h3 id="chat-user"><%= ticket.username %></h3>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <% messages.forEach(message => { %>
+                        <div class="message <%= message.sender_type %>">
+                            <div class="avatar"><%= message.sender_type === 'user' ? 'U' : 'A' %></div>
+                            <% if (message.message) { %>
+                                <div class="text"><%= message.message %></div>
+                            <% } %>
+                            <% if (message.file_path) { %>
+                                <img src="data:image/jpeg;base64,<%= message.file_path.toString('base64') %>" class="photo" alt="photo">
+                            <% } %>
+                        </div>
+                    <% }); %>
+                </div>
+                <form id="chat-form" enctype="multipart/form-data">
+                    <div class="chat-input">
+                        <label for="file-input">Tambah Foto</label>
+                        <input type="file" id="file-input" name="photo">
+                        <input type="text" id="message-input" placeholder="Ketik pesan...">
+                        <button type="button" onclick="sendMessage()">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/script/pusat-bantuan.js"></script>
+</body>
+</html>

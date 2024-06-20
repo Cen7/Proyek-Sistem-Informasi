@@ -50,20 +50,28 @@
             <img src="/image/map1@2x.png" alt="Lokasi Lapak" class="map-image">
           </div>
           <div class="mid-column">
-            <h3 class="garis">Jam Buka</h3>
-            <ul class="opening-hours">
-              <% lapak.jam_buka.forEach((jam, index) => { %>
-              <li><strong><%= jam.hari %></strong></li>
-              <li><%= jam.jam_buka %> - <%= jam.jam_tutup %></li>
-              <% }) %>
-            </ul>
+            <h3 class="garis">Laporan</h3>
+                <% laporan.forEach(report => { %>
+                    <div class="report">
+                        <p><img src="/image/Group 60439.png" class="profile-report">
+                            <strong><%= report.nama_lengkap %>:</strong> <%= report.alasan_lapak %></p>
+                        <% if (report.foto) { %>
+                            <img src="data:image/jpeg;base64,<%= report.foto.toString('base64') %>" alt="Report Photo" class="report-image">
+                        <% } %>
+                        <h3 class="garis"></h3>
+                    </div>
+                <% }) %>
           </div>
           <div class="right-column">
-            <h3 class="garis">Layanan</h3>
-            <p><%= lapak.layanan %></p>
+            <h3 class="garis">Keterangan Blokir</h3>
+            <p class="keterangan-blokir">Lapak anda melanggar kebijakan peggunaan aplikasi</p>
+            <!-- <p><%= lapak.layanan %></p> -->
+
+            <h3 class="garis">Pengajuan Lepas Blokir</h3>
+            <p  class="alasan-blokir" >Kenapa lapak saya di blokir? apakah bisa di bantu untuk  dibuka kembali? Saya sudah sesuai dengan ketentuan aplikasi</p>
             
-            <h3 class="garis">Foto Lapak</h3>
-            <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo">
+            <!-- <h3 class="garis">Foto Lapak</h3>
+            <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo"> -->
             
             <h3 class="garis">Verifikasi</h3>
             <div class="verification-buttons">
