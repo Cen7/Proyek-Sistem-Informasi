@@ -469,6 +469,7 @@ app.get("/admin-terverifikasi", (req, res) => {
   });
 });
 
+
 app.get("/admin-informasi-lapak-terverifikasi/:id_lapak", (req, res) => {
   const idLapak = parseInt(req.params.id_lapak);
 
@@ -2235,4 +2236,74 @@ app.post("/send-photo", upload.single('photo'), (req, res) => {
       );
     }
   );
+});
+app.get("/admin-ulasan", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
+      return;
+    }
+
+    const currentPage = parseInt(req.query.page) || 1;
+    const itemsPerPage = 8;
+    const offset = (currentPage - 1) * itemsPerPage;
+    const searchQuery = req.query.search || "";
+
+    let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terverifikasi'";
+    let dataQuery = `
+      SELECT l.id_lapak, l.nama_lapak, l.tanggal_pengajuan, l.lokasi_lapak, l.status_lapak, 
+             COALESCE(AVG(u.rating), 0) AS rata_rating,
+             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak) AS total_laporan,
+             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak AND r.status = 'pending') AS total_laporan_tertunda
+      FROM lapak l
+      LEFT JOIN ulasan u ON l.id_lapak = u.id_lapak
+      WHERE l.status_lapak ='terverifikasi'
+    `;
+
+    if (searchQuery) {
+      countQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+      dataQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+    }
+
+    dataQuery += " GROUP BY id_lapak, nama_lapak, tanggal_pengajuan, lokasi_lapak, status_lapak LIMIT ? OFFSET ?";
+
+    const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
+    const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+
+    connection.query(countQuery, countParams, (err, countResult) => {
+      if (err) {
+        console.error("Error executing count query:", err.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      const totalCount = countResult[0].count;
+      const pageCount = Math.ceil(totalCount / itemsPerPage);
+
+      connection.query(dataQuery, dataParams, (err, results) => {
+        connection.release();
+
+        if (err) {
+          console.error("Error executing query:", err.message);
+          res.sendStatus(500);
+          return;
+        }
+
+        results.forEach(lapak => {
+          lapak.tanggal_pengajuan = moment(lapak.tanggal_pengajuan).format('MMMM D, YYYY');
+        });
+
+        res.render("admin-ulasan", {
+          pageTitle: 'Daftar Lapak Terverifikasi',
+          lapakList: results,
+          dataCount: totalCount,
+          pageCount: pageCount,
+          currentPage: currentPage,
+          searchQuery: searchQuery,
+          searchAction: '/admin-ulasan'
+        });
+      });
+    });
+  });
 });
