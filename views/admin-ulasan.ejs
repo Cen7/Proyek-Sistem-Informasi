@@ -15,8 +15,8 @@
   />
 </head>
 <body>
-  <%- include('./layout/sidebar.ejs') %>
-  <%- include('./layout/header-search.ejs', { searchAction: '/admin-terverifikasi', searchQuery: searchQuery }) %>
+  <%- include('./layout/sidebar5.ejs') %>
+  <%- include('./layout/header-search.ejs', { searchAction: '/admin-ulasan', searchQuery: searchQuery }) %>
 
   <div class="h4-heading">All (<%= dataCount %>)</div>
   <table class="tabel-verifikasi-lapak">
@@ -44,7 +44,7 @@
             ...
           </td>
           <td><span class="status"><%= lapak.status_lapak %></span></td>
-          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-terverifikasi/<%= lapak.id_lapak %>'">
+          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-terverifikasi-ulasan/<%= lapak.id_lapak %>'">
             ...
           </td>
         </tr> 

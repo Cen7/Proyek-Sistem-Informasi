@@ -2295,13 +2295,85 @@ app.get("/admin-ulasan", (req, res) => {
         });
 
         res.render("admin-ulasan", {
-          pageTitle: 'Daftar Lapak Terverifikasi',
+          pageTitle: 'Daftar Ulasan Lapak Terverifikasi',
           lapakList: results,
           dataCount: totalCount,
           pageCount: pageCount,
           currentPage: currentPage,
           searchQuery: searchQuery,
           searchAction: '/admin-ulasan'
+        });
+      });
+    });
+  });
+});
+
+app.get("/admin-informasi-lapak-terverifikasi-ulasan/:id_lapak", (req, res) => {
+  const idLapak = parseInt(req.params.id_lapak);
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('Error connecting to database:', err.message);
+      res.status(500).send('Server error');
+      return;
+    }
+
+    const lapakQuery = 'SELECT * FROM lapak WHERE id_lapak = ?';
+    connection.query(lapakQuery, [idLapak], (err, lapakResults) => {
+      if (err) {
+        console.error('Error fetching lapak data:', err);
+        res.status(500).send('Server error');
+        return;
+      }
+
+      if (lapakResults.length === 0) {
+        res.status(404).send("Lapak not found");
+        return;
+      }
+
+      const lapak = lapakResults[0];
+
+      const bukaQuery = `
+        SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
+        FROM buka
+        JOIN hari ON buka.id_hari = hari.id_hari
+        WHERE buka.id_lapak = ?
+      `;
+      connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
+        if (err) {
+          console.error('Error fetching buka data:', err);
+          res.status(500).send('Server error');
+          return;
+        }
+
+        const formattedBukaResults = bukaResults.map(result => {
+          return {
+            hari: result.nama_hari,
+            jam_buka: result.jam_buka,
+            jam_tutup: result.jam_tutup
+          };
+        });
+
+        lapak.jam_buka = formattedBukaResults;
+
+        const laporanQuery = `
+          SELECT pengguna.nama_lengkap, laporan_lapak.alasan_lapak, laporan_lapak.foto
+          FROM laporan
+          JOIN laporan_lapak ON laporan.id_laporan = laporan_lapak.id_laporan
+          JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
+          WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
+        `;
+
+        connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
+          connection.release();
+
+          if (err) {
+            console.error('Error fetching laporan data:', err);
+            res.status(500).send('Server error');
+            return;
+          }
+
+          res.render("admin-informasi-lapak-terverifikasi-ulasan", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
         });
       });
     });
