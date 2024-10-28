@@ -67,5 +67,19 @@ body {
   
     /* Effects */
     --regular: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    
   }
-  
+  .rectangle-parent5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-darkslategray-100);
+    width: 240px;
+    height: 1080px;
+    flex-direction: column;
+    padding: 0 0 660px;
+    z-index: 7;
+    font-size: var(--base-large-size);
+    color: var(--light-white);
+    font-family: var(--heading-h5-heading);
+  }

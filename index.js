@@ -9,7 +9,7 @@ import forge from "node-forge";
 import multer from "multer";
 import moment from "moment";
 
-const port = 8080;
+const port = 8081;
 const app = express();
 app.use(cookieParser());
 
@@ -1134,7 +1134,7 @@ app.get('/admin-pembaruan-verif/:id', (req, res) => {
             lapak.jam_buka = formattedBukaResults;
 
             // Render halaman dengan data lapak yang sudah diambil
-            res.render("admin-pembaruan-verif", { lapak, pageTitle: 'Daftar Pengajuan Lapak' });
+            res.render("admin-pembaruan-verif", { lapak, pageTitle: 'Informasi Pembaruan Lapak' });
           });
         });
       });

@@ -171,3 +171,10 @@
     right: 60px;     /* Jarak dari kanan halaman */
     z-index: 1000;   /* Pastikan tombol berada di atas elemen lainnya */
 }
+
+/* Selektor elemen dengan atribut data-title */
+[data-page="admin-terverifikasi"] {
+  /* Gaya yang ingin Anda terapkan */
+  background-color: #FF0000;
+    border-radius: 0 var(--br-11xl) var(--br-11xl) 0;
+}
