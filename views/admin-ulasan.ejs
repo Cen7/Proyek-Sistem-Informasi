@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1, width=device-width" />
-  <link rel="stylesheet" href="css/global-terverifikasi.css" />
-  <link rel="stylesheet" href="css/admin-terverifikasi.css" />
+  <link rel="stylesheet" href="css/global-ulasan.css" />
+  <link rel="stylesheet" href="css/admin-ulasan.css" />
   <link
     rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
@@ -16,7 +16,7 @@
 </head>
 <body>
   <%- include('./layout/sidebar.ejs') %>
-  <%- include('./layout/header-search.ejs', { searchAction: '/admin-terverifikasi', searchQuery: searchQuery }) %>
+  <%- include('./layout/header-search.ejs', { searchAction: '/admin-ulasan', searchQuery: searchQuery }) %>
 
   <div class="h4-heading">All (<%= dataCount %>)</div>
   <table class="tabel-verifikasi-lapak">
@@ -25,9 +25,9 @@
         <th>Nama Lapak</th>
         <th>Alamat</th>
         <th class="ulasan">Ulasan</th>
-        <th>Total Laporan Terlampir</th>
-        <th>Total Laporan Tertunda</th>
-        <th>Laporan Tertunda</th>
+        <th>Total Ulasan</th>
+        <th>Total Ulasan Dilaporkan</th>
+        <th>Ulasan Tertunda</th>
         <th>Status</th>
         <th>Informasi Lapak</th>
       </tr>
@@ -44,7 +44,7 @@
             ...
           </td>
           <td><span class="status"><%= lapak.status_lapak %></span></td>
-          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-terverifikasi/<%= lapak.id_lapak %>'">
+          <td class="info-lapak-verif" onclick="location.href='/admin-informasi-lapak-terverifikasi-ulasan/<%= lapak.id_lapak %>'">
             ...
           </td>
         </tr> 

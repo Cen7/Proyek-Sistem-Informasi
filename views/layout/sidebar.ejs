@@ -1,64 +1,108 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-
     <link rel="stylesheet" href="/css/sidebar.css" />
     <link rel="stylesheet" href="/css/global-sidebar.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" />
+    <script>
+        // Detect initial page and set active menu
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname;
+            const menuItems = document.querySelectorAll('.menu-multi');
+
+            menuItems.forEach(item => {
+                const link = item.querySelector('[onclick]');
+                if (link) {
+                    const href = link.getAttribute('onclick');
+                    if (href && currentPath.includes(href.split("'")[1])) {
+                        item.classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+
 </head>
+
 <body>
     <div class="rectangle-parent5">
         <div class="frame-child9"></div>
         <div class="frame-child10"></div>
+
+        <!-- Menu Dashboard -->
         <div class="menu-multi" data-title="Dashboard">
             <div class="menu-multi-child"></div>
             <div class="dashboard">Dashboard</div>
         </div>
-        <button class="menu-multi1" data-title="Pengajuan Lapak">
-            <div class="menu-multi-item"></div>
+
+        <div class="menu-multi" data-title="Pengajuan Lapak">
+            <div class="menu-multi-item" data-page="admin-pengajuan"></div>
             <div class="component-1-parent">
                 <img class="component-1-icon" src="/image/Component 1.png" />
-                <div class="dashboard1" onclick="location.href='admin-pengajuan'">Pengajuan Lapak</div>
+                <div class="dashboard1" onclick="location.href='/admin-pengajuan'">Pengajuan Lapak</div>
             </div>
-        </button>
-        <div class="menu-multi2" id="menuMultiContainer1" data-title="Lapak Terverifikasi">
-            <div class="menu-multi-inner"></div>
-            <div class="component-1-group">
+        </div>
+
+        <!-- Menu Lapak Terverifikasi -->
+        <div class="menu-multi" data-title="Lapak Terverifikasi" >
+            <div class="menu-multi-item" data-page="admin-terverifikasi"></div>
+            <div class="component-1-parent">
                 <img class="component-1-icon1" loading="lazy" alt="" src="/image/Component 1-1.png" />
-                <div class="dashboard2" onclick="location.href='admin-terverifikasi'">Lapak Terverifikasi</div>
+                <div class="dashboard2" onclick="location.href='/admin-terverifikasi'">Lapak Terverifikasi</div>
             </div>
         </div>
-        <div class="menu-multi3" id="menuMultiContainer2" data-title="Lapak Terblokir">
-            <div class="menu-multi-child1"></div>
-            <div class="component-1-container">
+
+        <!-- Menu Lapak Terblokir -->
+        <div class="menu-multi" data-title="Lapak Terblokir">
+            <div class="menu-multi-item" data-page="admin-lapak-terblokir"></div>
+            <div class="component-1-parent">
                 <img class="component-1-icon2" loading="lazy" alt="" src="/image/Component 1-1.png" />
-                <div class="dashboard3" onclick="location.href='admin-lapak-terblokir'">Lapak Terblokir</div>
+                <div class="dashboard3" onclick="location.href='/admin-lapak-terblokir'">Lapak Terblokir</div>
             </div>
         </div>
-        <div class="menu-multi4" id="menuMultiContainer3" data-title="Pembaruan Lapak">
-            <div class="menu-multi-child2"></div>
-            <div class="group-div">
+
+        <!-- Menu Pembaruan Lapak -->
+        <div class="menu-multi" data-title="Pembaruan Lapak">
+            <div class="menu-multi-item" data-page="admin-pembaruan"></div>
+            <div class="component-1-parent">
                 <img class="component-1-icon3" loading="lazy" alt="" src="/image/Component 1-2.png" />
-                <div class="dashboard4" onclick="location.href='admin-pembaruan'">Pembaruan Lapak</div>
+                <div class="dashboard4" onclick="location.href='/admin-pembaruan'">Pembaruan Lapak</div>
             </div>
         </div>
-        <div class="menu-multi5" id="menuMultiContainer4" data-title="Pusat Bantuan">
-            <div class="menu-multi-child3"></div>
-            <div class="component-1-parent1">
+
+        <!-- Menu Pusat Bantuan -->
+        <div class="menu-multi" data-title="Pusat Bantuan">
+            <div class="menu-multi-item" data-page="pusat-bantuan"></div>
+            <div class="component-1-parent">
                 <img class="component-1-icon4" loading="lazy" alt="" src="/image/Component 1-2.png" />
-                <div class="dashboard5" onclick="location.href='pusat-bantuan'">Pusat Bantuan</div>
+                <div class="dashboard5" onclick="location.href='/pusat-bantuan'">Pusat Bantuan</div>
             </div>
         </div>
-        <div class="menu-multi6" id="menuMultiContainer5" data-title="Keluar">
-            <div class="menu-multi-child4"></div>
-            <div class="component-1-parent2">
+
+        <!-- Menu Pusat Ulasan -->
+        <div class="menu-multi" data-title="Pusat Ulasan">
+            <div class="menu-multi-item" data-page="admin-ulasan"></div>
+            <div class="component-1-parent">
                 <img class="component-1-icon5" loading="lazy" alt="" src="/image/component-1-52@2x.png" />
-                <div class="dashboard6" onclick="location.href='login'">Keluar</div>
+                <div class="dashboard6" onclick="location.href='/admin-ulasan'">Pusat Ulasan</div>
             </div>
-        </div>  
+        </div>
+
+        <!-- Menu Keluar -->
+        <div class="menu-multi" data-title="Keluar">
+            <div class="menu-multi-item"></div>
+            <div class="component-1-parent">
+                <img class="component-1-icon5" loading="lazy" alt="" src="/image/component-1-52@2x.png" />
+                <div class="dashboard7" onclick="location.href='/login'">Keluar</div>
+            </div>
+        </div>
     </div>
+
+    <script src="/js/sidebar.js"></script>
 </body>
+
 </html>

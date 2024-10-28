@@ -9,7 +9,7 @@ import forge from "node-forge";
 import multer from "multer";
 import moment from "moment";
 
-const port = 8080;
+const port = 8081;
 const app = express();
 app.use(cookieParser());
 
@@ -468,6 +468,7 @@ app.get("/admin-terverifikasi", (req, res) => {
     });
   });
 });
+
 
 app.get("/admin-informasi-lapak-terverifikasi/:id_lapak", (req, res) => {
   const idLapak = parseInt(req.params.id_lapak);
@@ -1133,7 +1134,7 @@ app.get('/admin-pembaruan-verif/:id', (req, res) => {
             lapak.jam_buka = formattedBukaResults;
 
             // Render halaman dengan data lapak yang sudah diambil
-            res.render("admin-pembaruan-verif", { lapak, pageTitle: 'Daftar Pengajuan Lapak' });
+            res.render("admin-pembaruan-verif", { lapak, pageTitle: 'Informasi Pembaruan Lapak' });
           });
         });
       });
@@ -2235,4 +2236,146 @@ app.post("/send-photo", upload.single('photo'), (req, res) => {
       );
     }
   );
+});
+app.get("/admin-ulasan", (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
+      return;
+    }
+
+    const currentPage = parseInt(req.query.page) || 1;
+    const itemsPerPage = 8;
+    const offset = (currentPage - 1) * itemsPerPage;
+    const searchQuery = req.query.search || "";
+
+    let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terverifikasi'";
+    let dataQuery = `
+      SELECT l.id_lapak, l.nama_lapak, l.tanggal_pengajuan, l.lokasi_lapak, l.status_lapak, 
+             COALESCE(AVG(u.rating), 0) AS rata_rating,
+             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak) AS total_laporan,
+             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak AND r.status = 'pending') AS total_laporan_tertunda
+      FROM lapak l
+      LEFT JOIN ulasan u ON l.id_lapak = u.id_lapak
+      WHERE l.status_lapak ='terverifikasi'
+    `;
+
+    if (searchQuery) {
+      countQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+      dataQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+    }
+
+    dataQuery += " GROUP BY id_lapak, nama_lapak, tanggal_pengajuan, lokasi_lapak, status_lapak LIMIT ? OFFSET ?";
+
+    const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
+    const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+
+    connection.query(countQuery, countParams, (err, countResult) => {
+      if (err) {
+        console.error("Error executing count query:", err.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      const totalCount = countResult[0].count;
+      const pageCount = Math.ceil(totalCount / itemsPerPage);
+
+      connection.query(dataQuery, dataParams, (err, results) => {
+        connection.release();
+
+        if (err) {
+          console.error("Error executing query:", err.message);
+          res.sendStatus(500);
+          return;
+        }
+
+        results.forEach(lapak => {
+          lapak.tanggal_pengajuan = moment(lapak.tanggal_pengajuan).format('MMMM D, YYYY');
+        });
+
+        res.render("admin-ulasan", {
+          pageTitle: 'Daftar Ulasan Lapak Terverifikasi',
+          lapakList: results,
+          dataCount: totalCount,
+          pageCount: pageCount,
+          currentPage: currentPage,
+          searchQuery: searchQuery,
+          searchAction: '/admin-ulasan'
+        });
+      });
+    });
+  });
+});
+
+app.get("/admin-informasi-lapak-terverifikasi-ulasan/:id_lapak", (req, res) => {
+  const idLapak = parseInt(req.params.id_lapak);
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('Error connecting to database:', err.message);
+      res.status(500).send('Server error');
+      return;
+    }
+
+    const lapakQuery = 'SELECT * FROM lapak WHERE id_lapak = ?';
+    connection.query(lapakQuery, [idLapak], (err, lapakResults) => {
+      if (err) {
+        console.error('Error fetching lapak data:', err);
+        res.status(500).send('Server error');
+        return;
+      }
+
+      if (lapakResults.length === 0) {
+        res.status(404).send("Lapak not found");
+        return;
+      }
+
+      const lapak = lapakResults[0];
+
+      const bukaQuery = `
+        SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
+        FROM buka
+        JOIN hari ON buka.id_hari = hari.id_hari
+        WHERE buka.id_lapak = ?
+      `;
+      connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
+        if (err) {
+          console.error('Error fetching buka data:', err);
+          res.status(500).send('Server error');
+          return;
+        }
+
+        const formattedBukaResults = bukaResults.map(result => {
+          return {
+            hari: result.nama_hari,
+            jam_buka: result.jam_buka,
+            jam_tutup: result.jam_tutup
+          };
+        });
+
+        lapak.jam_buka = formattedBukaResults;
+
+        const laporanQuery = `
+          SELECT pengguna.nama_lengkap, laporan_lapak.alasan_lapak, laporan_lapak.foto
+          FROM laporan
+          JOIN laporan_lapak ON laporan.id_laporan = laporan_lapak.id_laporan
+          JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
+          WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
+        `;
+
+        connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
+          connection.release();
+
+          if (err) {
+            console.error('Error fetching laporan data:', err);
+            res.status(500).send('Server error');
+            return;
+          }
+
+          res.render("admin-informasi-lapak-terverifikasi-ulasan", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
+        });
+      });
+    });
+  });
 });
