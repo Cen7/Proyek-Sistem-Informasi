@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="/css/global-ulasan-laporan.css" />
+  <link rel="stylesheet" href="/css/admin-ulasan-laporan.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" />
+</head>
+
+<body>
+  <%- include('./layout/sidebar.ejs') %>
+    <%- include('./layout/header.ejs') %>
+
+      <div class="left-column">
+        <div class="right-header">
+          <button class="back-button" onclick="location.href='/admin-ulasan'">Kembali</button>
+        </div>
+        <h2>Deskripsi Ulasan</h2>
+        <p><strong>Nama Pemberi Ulasan:</strong>
+          <%= laporanList[0]?.reviewer %>
+        </p>
+        <p><strong>Ulasan:</strong>
+          <%= laporanList[0]?.deskripsi %>
+        </p>
+        <p><strong>Rating:</strong>
+          <%= laporanList[0]?.rating %>
+        </p>
+        <p><strong>Nama Lapak:</strong>
+          <%= laporanList[0]?.nama_lapak %>
+        </p>
+        <p><strong>Alamat Lapak:</strong>
+          <%= laporanList[0]?.lokasi_lapak %>
+        </p>
+        <p><strong>Tanggal Ulasan:</strong>
+          <%= laporanList[0]?.tanggal %>
+        </p>
+        <p><strong>Total Laporan:</strong>
+          <%= laporanList.length %> <button class="delete-button"
+              onclick="deleteUlasan('<%= laporanList[0]?.id_ulasan %>')">
+              Hapus Ulasan dan Laporan
+            </button>
+        </p>
+        <!-- Tambahkan tombol hapus ulasan -->
+
+      </div>
+
+      <table class="tabel-verifikasi-lapak">
+        <thead>
+          <tr class="informasi-table-verifikasi">
+            <th>Nama Pelapor</th>
+            <th>Deskripsi Laporan</th>
+            <th>Tanggal Laporan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% laporanList.forEach(laporan=> { %>
+            <tr class="informasi-table-verifikasi">
+              <td>
+                <%= laporan.pelapor %>
+              </td>
+              <td>
+                <%= laporan.isiLaporan%>
+              </td>
+              <td>
+                <%= moment(laporan.tanggal).format("YYYY-MM-DD") %>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+
+
+      <script>
+        function deleteUlasan(idUlasan) {
+          if (confirm("Apakah Anda yakin ingin menghapus ulasan ini beserta semua laporan terkait?")) {
+            fetch(`/delete-ulasan/${idUlasan}`, {
+              method: 'DELETE'
+            })
+              .then(response => {
+                if (response.ok) {
+                  alert("Ulasan dan laporan terkait berhasil dihapus.");
+                  window.location.href = '/admin-ulasan'; // Redirect setelah penghapusan
+                } else {
+                  alert("Gagal menghapus ulasan. Silakan coba lagi.");
+                }
+              })
+              .catch(error => {
+                console.error("Error:", error);
+                alert("Terjadi kesalahan.");
+              });
+          }
+        }
+      </script>
+
+      </script>
+</body>
+
+</html>

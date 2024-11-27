@@ -216,3 +216,6 @@ h2 {
 .back-btn:focus {
   outline: none; /* Hilangkan outline saat tombol mendapatkan fokus */
 }
+.text-green {
+  color: green;
+}

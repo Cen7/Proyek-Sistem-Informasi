@@ -7,7 +7,7 @@ table {
   table-layout: fixed; /* Menentukan tata letak tabel tetap */
 }
 .tabel-verifikasi-lapak {
-  margin-top: 8%;
+  margin-top: 2%;
   margin-left: 16%;
 }
 th, td {
@@ -380,4 +380,45 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
   /* margin-top:5%; */
+}
+
+.left-column{
+  padding-left:18%;
+  padding-top:7%;
+}
+.back-button {
+  background-color: #636881;
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  margin-right: 5%;
+  cursor: pointer;
+  border-radius: 10px;
+  float: right; /* Pushes the button to the right */
+}
+/* CSS untuk tombol */
+.delete-button {
+  float: right; /* Pushes the button to the right */
+  background-color: #636881; /* Warna dasar abu-abu */
+  margin-right: 5%;
+  color: white; /* Warna teks */
+  border: none; /* Hapus border */
+  border-radius: 5px; /* Membulatkan sudut */
+  padding: 10px 20px; /* Jarak dalam tombol */
+  font-size: 16px; /* Ukuran font */
+  font-weight: bold; /* Tebalkan teks */
+  cursor: pointer; /* Ubah kursor jadi tangan */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animasi transisi */
+}
+
+/* Hover efek */
+.delete-button:hover {
+  background-color: #d9534f; /* Warna merah */
+  transform: scale(1.05); /* Sedikit memperbesar tombol */
+}
+
+/* Fokus efek (opsional untuk aksesibilitas) */
+.delete-button:focus {
+  outline: 2px solid #d9534f; /* Tambahkan outline merah */
+  outline-offset: 2px; /* Jarak outline */
 }

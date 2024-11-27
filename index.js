@@ -50,7 +50,7 @@ app.listen(port, () => {
 
 app.use(session({
   name: 'session',
-  keys: ['key1', 'key2'], 
+  keys: ['key1', 'key2'],
   maxAge: 24 * 60 * 60 * 1000 // 24 jam
 }));
 
@@ -103,10 +103,10 @@ app.post("/login", (req, res) => {
           username: user.username,
           role: user.role
         };
-        
+
         res.redirect("/admin-pengajuan");
       } else {
-        res.redirect("/?error=1"); 
+        res.redirect("/?error=1");
       }
     });
   });
@@ -1238,7 +1238,7 @@ app.post('/admin-informasi-lapak-pembaruan/:id/accept', (req, res) => {
 app.post('/admin-informasi-lapak-pembaruan/:id/reject', (req, res) => {
   const id = req.params.id;
   let sql = `UPDATE pembaruan_lapak SET status_pembaruan_pembaruan = 'ditolak' WHERE id_pembaruan = ${id}`;
-  
+
   pool.getConnection((err, connection) => {
     if (err) {
       console.error("Error connecting to database:", err.message);
@@ -1375,10 +1375,10 @@ app.get("/admin-informasi-lapak-pengajuan/:id_lapak", (req, res) => {
             jam_tutup: result.jam_tutup
           };
         });
-        
+
         lapak.jam_buka = formattedBukaResults;
         res.render("admin-informasi-lapak-pengajuan", { lapak, pageTitle: 'Informasi Lapak' });
-        
+
       });
     });
   });
@@ -1579,7 +1579,7 @@ app.get("/admin-informasi-lapak-terverifikasi/:id_lapak", (req, res) => {
             jam_tutup: result.jam_tutup
           };
         });
-        
+
         lapak.jam_buka = formattedBukaResults;
 
         const laporanQuery = `
@@ -1589,16 +1589,16 @@ app.get("/admin-informasi-lapak-terverifikasi/:id_lapak", (req, res) => {
           JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
           WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
         `;
-        
+
         connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
           connection.release();
-          
+
           if (err) {
             console.error('Error fetching laporan data:', err);
             res.status(500).send('Server error');
             return;
           }
-          
+
           res.render("admin-informasi-lapak-terverifikasi", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
         });
       });
@@ -1651,7 +1651,7 @@ app.get("/admin-informasi-lapak-laporan-tertunda/:id_lapak", (req, res) => {
             jam_tutup: result.jam_tutup
           };
         });
-        
+
         lapak.jam_buka = formattedBukaResults;
 
         const laporanQuery = `
@@ -1663,16 +1663,16 @@ app.get("/admin-informasi-lapak-laporan-tertunda/:id_lapak", (req, res) => {
         `;
 
 
-        
+
         connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
           connection.release();
-          
+
           if (err) {
             console.error('Error fetching laporan data:', err);
             res.status(500).send('Server error');
             return;
           }
-          
+
           res.render("admin-informasi-lapak-laporan-tertunda", { lapak, laporan: laporanResults, pageTitle: 'Informasi Laporan Lapak Tertunda' });
         });
       });
@@ -1853,7 +1853,7 @@ app.get("/admin-informasi-lapak-terblokir/:id_lapak", (req, res) => {
               return;
             }
 
-            
+
             connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
               connection.release();
 
@@ -1977,7 +1977,7 @@ app.get("/admin-lapak-terverifikasi-blokir/:id_lapak", (req, res) => {
             jam_tutup: result.jam_tutup
           };
         });
-        
+
         lapak.jam_buka = formattedBukaResults;
 
         const laporanQuery = `
@@ -1987,16 +1987,16 @@ app.get("/admin-lapak-terverifikasi-blokir/:id_lapak", (req, res) => {
           JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
           WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
         `;
-        
+
         connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
           connection.release();
-          
+
           if (err) {
             console.error('Error fetching laporan data:', err);
             res.status(500).send('Server error');
             return;
           }
-          
+
           res.render("admin-lapak-terverifikasi-blokir", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
         });
       });
@@ -2130,8 +2130,8 @@ app.get("/pusat-bantuan/:id", (req, res) => {
 
 app.post("/send-message", (req, res) => {
   const { text } = req.body;
-  const ticketId = req.query.ticketId; 
-  const senderId = req.session.user.id; 
+  const ticketId = req.query.ticketId;
+  const senderId = req.session.user.id;
   const senderType = "admin";
 
   pool.getConnection((err, connection) => {
@@ -2237,6 +2237,8 @@ app.post("/send-photo", upload.single('photo'), (req, res) => {
     }
   );
 });
+
+
 app.get("/admin-ulasan", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -2250,28 +2252,65 @@ app.get("/admin-ulasan", (req, res) => {
     const offset = (currentPage - 1) * itemsPerPage;
     const searchQuery = req.query.search || "";
 
-    let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='terverifikasi'";
-    let dataQuery = `
-      SELECT l.id_lapak, l.nama_lapak, l.tanggal_pengajuan, l.lokasi_lapak, l.status_lapak, 
-             COALESCE(AVG(u.rating), 0) AS rata_rating,
-             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak) AS total_laporan,
-             (SELECT COUNT(*) FROM laporan r WHERE r.id_lapak = l.id_lapak AND r.status = 'pending') AS total_laporan_tertunda
-      FROM lapak l
-      LEFT JOIN ulasan u ON l.id_lapak = u.id_lapak
-      WHERE l.status_lapak ='terverifikasi'
+    // Base queries
+    let countQuery = `
+      SELECT COUNT(DISTINCT u.id_ulasan) AS count
+      FROM laporan la
+      RIGHT JOIN laporan_ulasan lu ON la.id_laporan = lu.id_laporan
+      LEFT JOIN ulasan u ON lu.id_ulasan = u.id_ulasan
+      LEFT JOIN pengguna p ON p.id_pengguna = u.id_pengguna
+      LEFT JOIN lapak l ON u.id_lapak = l.id_lapak
     `;
 
+    let dataQuery = `
+      SELECT 
+        p.username AS reviewer, 
+        l.nama_lapak, 
+        l.lokasi_lapak, 
+        u.deskripsi, 
+        u.tanggal,
+        u.rating,
+        u.id_ulasan, 
+        COUNT(u.id_ulasan) AS count_laporan
+      FROM laporan la
+      RIGHT JOIN laporan_ulasan lu ON la.id_laporan = lu.id_laporan
+      LEFT JOIN ulasan u ON lu.id_ulasan = u.id_ulasan
+      LEFT JOIN pengguna p ON p.id_pengguna = u.id_pengguna
+      LEFT JOIN lapak l ON u.id_lapak = l.id_lapak
+    `;
+
+    // Add search conditions if a search query exists
+    const whereConditions = [];
+    const queryParams = [];
+
     if (searchQuery) {
-      countQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
-      dataQuery += " AND (nama_lapak LIKE ? OR lokasi_lapak LIKE ?)";
+      whereConditions.push("(p.username LIKE ? OR l.nama_lapak LIKE ?)");
+      queryParams.push(`%${searchQuery}%`, `%${searchQuery}%`);
     }
 
-    dataQuery += " GROUP BY id_lapak, nama_lapak, tanggal_pengajuan, lokasi_lapak, status_lapak LIMIT ? OFFSET ?";
+    if (whereConditions.length > 0) {
+      const whereClause = "WHERE " + whereConditions.join(" AND ");
+      countQuery += whereClause;
+      dataQuery += whereClause;
+    }
 
-    const countParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`] : [];
-    const dataParams = searchQuery ? [`%${searchQuery}%`, `%${searchQuery}%`, itemsPerPage, offset] : [itemsPerPage, offset];
+    dataQuery += `
+      GROUP BY 
+        p.username, 
+        l.nama_lapak, 
+        l.lokasi_lapak, 
+        u.deskripsi,
+        u.rating,
+        u.id_ulasan,  
+        u.tanggal
+      ORDER BY u.tanggal DESC
+      LIMIT ? OFFSET ?
+    `;
 
-    connection.query(countQuery, countParams, (err, countResult) => {
+    queryParams.push(itemsPerPage, offset);
+
+    // Execute the count query
+    connection.query(countQuery, queryParams.slice(0, queryParams.length - 2), (err, countResult) => {
       if (err) {
         console.error("Error executing count query:", err.message);
         res.sendStatus(500);
@@ -2281,101 +2320,133 @@ app.get("/admin-ulasan", (req, res) => {
       const totalCount = countResult[0].count;
       const pageCount = Math.ceil(totalCount / itemsPerPage);
 
-      connection.query(dataQuery, dataParams, (err, results) => {
+      // Execute the data query
+      connection.query(dataQuery, queryParams, (err, results) => {
         connection.release();
 
         if (err) {
-          console.error("Error executing query:", err.message);
+          console.error("Error executing data query:", err.message);
           res.sendStatus(500);
           return;
         }
 
+        // Format tanggal untuk setiap hasil
         results.forEach(lapak => {
-          lapak.tanggal_pengajuan = moment(lapak.tanggal_pengajuan).format('MMMM D, YYYY');
+          lapak.tanggal = moment(lapak.tanggal).format("MMMM D, YYYY");
         });
 
+        // Render halaman dengan data
         res.render("admin-ulasan", {
-          pageTitle: 'Daftar Ulasan Lapak Terverifikasi',
+          pageTitle: "Daftar Ulasan Lapak Terverifikasi",
           lapakList: results,
           dataCount: totalCount,
           pageCount: pageCount,
           currentPage: currentPage,
           searchQuery: searchQuery,
-          searchAction: '/admin-ulasan'
+          searchAction: "/admin-ulasan",
+          moment: moment  // Pass moment to the template
         });
       });
     });
   });
 });
 
-app.get("/admin-informasi-lapak-terverifikasi-ulasan/:id_lapak", (req, res) => {
-  const idLapak = parseInt(req.params.id_lapak);
+
+app.get("/admin-ulasan-laporan/:id_ulasan", (req, res) => {
+  const { id_ulasan } = req.params;
 
   pool.getConnection((err, connection) => {
     if (err) {
-      console.error('Error connecting to database:', err.message);
-      res.status(500).send('Server error');
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
       return;
     }
 
-    const lapakQuery = 'SELECT * FROM lapak WHERE id_lapak = ?';
-    connection.query(lapakQuery, [idLapak], (err, lapakResults) => {
+    const query = `
+      SELECT 
+        pe.username as pelapor,
+        p.username AS reviewer, 
+        l.nama_lapak, 
+        l.lokasi_lapak, 
+        u.deskripsi, 
+        u.tanggal, 
+        u.rating,
+        la.id_laporan, 
+        lu.alasan_ulasan as isiLaporan,
+        u.id_ulasan,
+        COUNT(u.id_ulasan) AS count_laporan
+      FROM laporan la
+      RIGHT JOIN laporan_ulasan lu ON la.id_laporan = lu.id_laporan
+      LEFT JOIN pengguna pe ON pe.id_pengguna = la.id_pengguna
+      LEFT JOIN ulasan u ON lu.id_ulasan = u.id_ulasan
+      LEFT JOIN pengguna p ON p.id_pengguna = u.id_pengguna
+      LEFT JOIN lapak l ON u.id_lapak = l.id_lapak
+      WHERE u.id_ulasan = ?
+      GROUP BY la.id_laporan, pe.username,u.id_ulasan,isiLaporan, p.username, l.nama_lapak, l.lokasi_lapak, u.deskripsi, u.tanggal, u.rating`;
+
+    connection.query(query, [id_ulasan], (err, results) => {
+      connection.release();
+
       if (err) {
-        console.error('Error fetching lapak data:', err);
-        res.status(500).send('Server error');
+        console.error("Error executing query:", err.message);
+        res.sendStatus(500);
         return;
       }
 
-      if (lapakResults.length === 0) {
-        res.status(404).send("Lapak not found");
+      if (results.length === 0) {
+        res.status(404).send("Laporan tidak ditemukan");
         return;
       }
 
-      const lapak = lapakResults[0];
+      results.forEach(laporan => {
+        laporan.tanggal = moment(laporan.tanggal).format("MMMM D, YYYY");
+      });
 
-      const bukaQuery = `
-        SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
-        FROM buka
-        JOIN hari ON buka.id_hari = hari.id_hari
-        WHERE buka.id_lapak = ?
-      `;
-      connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
-        if (err) {
-          console.error('Error fetching buka data:', err);
-          res.status(500).send('Server error');
-          return;
-        }
-
-        const formattedBukaResults = bukaResults.map(result => {
-          return {
-            hari: result.nama_hari,
-            jam_buka: result.jam_buka,
-            jam_tutup: result.jam_tutup
-          };
-        });
-
-        lapak.jam_buka = formattedBukaResults;
-
-        const laporanQuery = `
-          SELECT pengguna.nama_lengkap, laporan_lapak.alasan_lapak, laporan_lapak.foto
-          FROM laporan
-          JOIN laporan_lapak ON laporan.id_laporan = laporan_lapak.id_laporan
-          JOIN pengguna ON laporan.id_pengguna = pengguna.id_pengguna
-          WHERE laporan.id_lapak = ? AND laporan.status = 'approved'
-        `;
-
-        connection.query(laporanQuery, [idLapak], (err, laporanResults) => {
-          connection.release();
-
-          if (err) {
-            console.error('Error fetching laporan data:', err);
-            res.status(500).send('Server error');
-            return;
-          }
-
-          res.render("admin-informasi-lapak-terverifikasi-ulasan", { lapak, laporan: laporanResults, pageTitle: 'Informasi Lapak' });
-        });
+      res.render("admin-ulasan-laporan", {
+        pageTitle: "Detail Laporan Ulasan",
+        laporanList: results, // Kirim seluruh array laporan ke template
+        moment: moment
       });
     });
   });
 });
+
+app.delete('/delete-ulasan/:id_ulasan', (req, res) => {
+  const { id_ulasan } = req.params;
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error connecting to database:", err.message);
+      res.sendStatus(500);
+      return;
+    }
+
+    const deleteQuery = `
+      DELETE la, lu, u
+      FROM laporan la
+      RIGHT JOIN laporan_ulasan lu ON la.id_laporan = lu.id_laporan
+      LEFT JOIN ulasan u ON lu.id_ulasan = u.id_ulasan
+      WHERE u.id_ulasan = ?;
+    `;
+
+    connection.query(deleteQuery, [id_ulasan], (err, result) => {
+      connection.release();
+
+      if (err) {
+        console.error("Error deleting ulasan and laporan:", err.message);
+        res.sendStatus(500);
+        return;
+      }
+
+      if (result.affectedRows > 0) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
+    });
+  });
+});
+
+
+
+

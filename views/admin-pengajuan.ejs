@@ -43,7 +43,12 @@
               <td class = "tanggal"><%= lapak.tanggal_pengajuan %></td>
               <td class = "alamat"><%= lapak.lokasi_lapak %></td>
               <td class = "statusLapak"><span class="status"><%= lapak.status_lapak %></span></td>
-              <td class ="info-lapak" onclick="location.href='/admin-informasi-lapak-pengajuan/<%= lapak.id_lapak %>'">...</td>
+              <td class="deskripsi-table-verifikasi">
+                <a href="/admin-informasi-lapak-pengajuan/<%= lapak.id_lapak %>">
+                  <button class="action-button">. . .</button>
+                </a>
+              </td>
+             
             </tr>
             <% }) %>
           </tbody>

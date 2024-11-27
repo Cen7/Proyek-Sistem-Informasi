@@ -82,7 +82,7 @@
                           </div>
                         </div>
                         <% }) %>
-                    </form>z
+                    </form>
                     <% } else { %>
                       <p>Data jam buka tidak ditemukan untuk lapak ini.</p>
                       <% } %>
@@ -93,49 +93,46 @@
               <div class="info-section">
                 <div class="section">
                   <h3>Daftar Perubahan</h3>
-
+                
                   <% if (lapak.nama_lapak_pembaruan) { %>
                     <p><strong>Nama Lapak:</strong>
-                      <%= lapak.nama_lapak_pembaruan %>
+                      <span class="text-green"><%= lapak.nama_lapak_pembaruan %></span>
                     </p>
-                    <% } %>
-                      <% if (lapak.deskripsi_lapak_pembaruan) { %>
-                        <p><strong>Deskripsi Lapak:</strong>
-                          <%= lapak.deskripsi_lapak_pembaruan %>
-                        </p>
-                        <% } %>
-                          <% if (lapak.kategori_lapak_pembaruan) { %>
-                            <p><strong>Kategori Lapak:</strong>
-                              <%= lapak.kategori_lapak_pembaruan %>
-                            </p>
-                            <% } %>
-                                  <% if (lapak.nomor_telepon_pembaruan) { %>
-                                    <p><strong>No Telepon Lapak:</strong>
-                                      <%= lapak.nomor_telepon_pembaruan %>
-                                    </p>
-                                    <% } %>
-                                      <% if (lapak.situs_pembaruan) { %>
-                                        <p><strong>Situs Lapak:</strong>
-                                          <%= lapak.situs_pembaruan %>
-                                        </p>
-                                        <% } %>
-                                          <% if (lapak.layanan_pembaruan) { %>
-                                            <p><strong>Layanan Lapak:</strong>
-                                              <%= lapak.layanan_pembaruan %>
-                                            </p>
-                                            <% } %>
-
-                                              <% if (lapak.jam_buka_pembaruan && lapak.jam_buka_pembaruan.length> 0) { %>
-                                                <p><strong>Jam Buka:</strong>
-                                                  <% lapak.jam_buka_pembaruan.forEach((jam, index)=> { %>
-                                                    <%= jam.hari %> - Buka <%= jam.jam_buka %> - <%= jam.jam_tutup %>
-                                                          <br>
-                                                          <% }) %>
-                                                </p>
-                                                <% } %>
-
-
+                  <% } %>
+                  <% if (lapak.deskripsi_lapak_pembaruan) { %>
+                    <p><strong>Deskripsi Lapak:</strong>
+                      <span class="text-green"><%= lapak.deskripsi_lapak_pembaruan %></span>
+                    </p>
+                  <% } %>
+                  <% if (lapak.kategori_lapak_pembaruan) { %>
+                    <p><strong>Kategori Lapak:</strong>
+                      <span class="text-green"><%= lapak.kategori_lapak_pembaruan %></span>
+                    </p>
+                  <% } %>
+                  <% if (lapak.nomor_telepon_pembaruan) { %>
+                    <p><strong>No Telepon Lapak:</strong>
+                      <span class="text-green"><%= lapak.nomor_telepon_pembaruan %></span>
+                    </p>
+                  <% } %>
+                  <% if (lapak.situs_pembaruan) { %>
+                    <p><strong>Situs Lapak:</strong>
+                      <span class="text-green"><%= lapak.situs_pembaruan %></span>
+                    </p>
+                  <% } %>
+                  <% if (lapak.layanan_pembaruan) { %>
+                    <p><strong>Layanan Lapak:</strong>
+                      <span class="text-green"><%= lapak.layanan_pembaruan %></span>
+                    </p>
+                  <% } %>
+                  <% if (lapak.jam_buka_pembaruan && lapak.jam_buka_pembaruan.length > 0) { %>
+                    <p><strong>Jam Buka:</strong>
+                      <% lapak.jam_buka_pembaruan.forEach((jam, index) => { %>
+                        <span class="text-green"><%= jam.hari %> - Buka <%= jam.jam_buka %> - <%= jam.jam_tutup %></span><br>
+                      <% }) %>
+                    </p>
+                  <% } %>
                 </div>
+                
 
 
                 <div class="section">
