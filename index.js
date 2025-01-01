@@ -5,9 +5,22 @@ import session from "cookie-session";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import mysql from "mysql";
+import mysql2 from "mysql";
 import forge from "node-forge";
 import multer from "multer";
 import moment from "moment";
+import dotenv from 'dotenv';
+dotenv.config();
+// require('dotenv').config();
+
+
+dotenv.config({ path: './email.env' });
+
+// Immediately after, add console logs to verify
+console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('EMAIL_USER:', process.env.DB_HOST);
+console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Password is set' : 'Password is NOT set');
+
 
 const port = 8081;
 const app = express();
@@ -24,12 +37,48 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const pool = mysql.createPool({
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Izinkan domain frontend Anda
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Izinkan metode HTTP
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Izinkan header yang diperlukan
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Izinkan pengiriman cookie jika diperlukan
+  next();
+});
+
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.status(204).end(); // Tidak ada konten
+});
+
+
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1); // Trust the reverse proxy
+}
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'secret', // Replace with a strong secret
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    secure: true, // Set to true if using HTTPS
+    sameSite: 'none',
+  }
+}));
+
+const pool = mysql2.createPool({
   multipleStatements: true,
-  user: "root",
-  password: "",
-  database: "prosi",
-  host: "127.0.0.1",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DATABASE,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT
 });
 
 pool.getConnection((err, connection) => {
