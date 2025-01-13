@@ -47,7 +47,7 @@
             <h3 class="garis">Lokasi</h3>
             <p><strong>Lokasi Lapak</strong></p>
             <p><%= lapak.lokasi_lapak %></p>
-            </div>
+          </div>
           <div class="mid-column">
             <h3 class="garis">Jam Buka</h3>
             <ul class="opening-hours">
@@ -62,7 +62,15 @@
             <p><%= lapak.layanan %></p>
             
             <h3 class="garis">Foto Lapak</h3>
-            <img src="/image/image-3@2x.png" alt="Foto Lapak" class="lapak-photo">
+            <% if (lapak.foto_base64) { %>
+              <img 
+                src="<%= lapak.foto_base64 %>" 
+                alt="Foto Lapak" 
+                class="lapak-photo"
+              >
+            <% } else { %>
+              <p class="no-photo">Foto tidak tersedia</p>
+            <% } %>
             
             <h3 class="garis">Verifikasi</h3>
             <div class="verification-buttons">

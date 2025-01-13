@@ -205,7 +205,7 @@ app.get("/admin-pengajuan", (req, res) => {
 
     let countQuery = "SELECT COUNT(*) AS count FROM lapak WHERE status_lapak ='menunggu'";
     let dataQuery = `
-      SELECT id_lapak, nama_lapak, tanggal_pengajuan, lokasi_lapak, status_lapak 
+      SELECT id_lapak, nama_lapak, tanggal_pengajuan, lokasi_lapak, status_lapak
       FROM lapak 
       WHERE status_lapak ='menunggu' 
     `;
@@ -267,7 +267,19 @@ app.get("/admin-informasi-lapak-pengajuan/:id_lapak", (req, res) => {
       return;
     }
 
-    const lapakQuery = 'SELECT * FROM lapak WHERE id_lapak = ?';
+    // Modified query to convert BLOB to base64
+    const lapakQuery = `
+      SELECT 
+        l.*,
+        CASE 
+          WHEN l.foto_lapak IS NOT NULL 
+          THEN CONCAT('data:image/jpeg;base64,', TO_BASE64(l.foto_lapak))
+          ELSE NULL 
+        END as foto_base64
+      FROM lapak l 
+      WHERE id_lapak = ?
+    `;
+
     connection.query(lapakQuery, [idLapak], (err, lapakResults) => {
       if (err) {
         console.error('Error fetching lapak data:', err);
@@ -288,6 +300,7 @@ app.get("/admin-informasi-lapak-pengajuan/:id_lapak", (req, res) => {
         JOIN hari ON buka.id_hari = hari.id_hari
         WHERE buka.id_lapak = ?
       `;
+
       connection.query(bukaQuery, [idLapak], (err, bukaResults) => {
         connection.release();
 
@@ -307,7 +320,6 @@ app.get("/admin-informasi-lapak-pengajuan/:id_lapak", (req, res) => {
 
         lapak.jam_buka = formattedBukaResults;
         res.render("admin-informasi-lapak-pengajuan", { lapak, pageTitle: 'Informasi Lapak' });
-
       });
     });
   });
@@ -544,6 +556,12 @@ app.get("/admin-informasi-lapak-terverifikasi/:id_lapak", (req, res) => {
 
       const lapak = lapakResults[0];
 
+      // Ensure the photo data is properly handled if it exists
+      if (lapak.foto_lapak) {
+        // The photo data will be automatically converted to base64 in the template
+        // No need for additional processing here
+        console.log('Photo data exists');
+      }
       const bukaQuery = `
         SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
         FROM buka
@@ -807,18 +825,22 @@ app.get("/admin-informasi-lapak-terblokir/:id_lapak", (req, res) => {
       if (err) {
         console.error('Error fetching lapak data:', err);
         res.status(500).send('Server error');
-        connection.release();
         return;
       }
 
       if (lapakResults.length === 0) {
         res.status(404).send("Lapak not found");
-        connection.release();
         return;
       }
 
       const lapak = lapakResults[0];
 
+      // Ensure the photo data is properly handled if it exists
+      if (lapak.foto_lapak) {
+        // The photo data will be automatically converted to base64 in the template
+        // No need for additional processing here
+        console.log('Photo data exists');
+      }
       if (lapak.status === 'terblokir') {
         const updateStatusQuery = 'UPDATE lapak SET status = ? WHERE id_lapak = ?';
         connection.query(updateStatusQuery, ['terverifikasi', idLapak], (err, updateResult) => {
@@ -1086,7 +1108,14 @@ app.get('/admin-pembaruan-verif/:id', (req, res) => {
 
     const id = req.params.id;
     let sql = `
-      SELECT p.*, l.*
+      SELECT 
+        p.*, 
+        l.*,
+        CASE 
+          WHEN p.foto_lapak_pembaruan IS NOT NULL 
+          THEN CONCAT('data:image/jpeg;base64,', TO_BASE64(p.foto_lapak_pembaruan))
+          ELSE NULL 
+        END as foto_base64_pembaruan
       FROM pembaruan_lapak p
       JOIN lapak l ON p.id_lapak = l.id_lapak
       WHERE p.id_pembaruan = ${connection.escape(id)}
@@ -1680,6 +1709,12 @@ app.get("/admin-informasi-lapak-laporan-tertunda/:id_lapak", (req, res) => {
 
       const lapak = lapakResults[0];
 
+      // Ensure the photo data is properly handled if it exists
+      if (lapak.foto_lapak) {
+        // The photo data will be automatically converted to base64 in the template
+        // No need for additional processing here
+        console.log('Photo data exists');
+      }
       const bukaQuery = `
         SELECT hari.nama_hari, buka.jam_buka, buka.jam_tutup
         FROM buka
@@ -2423,6 +2458,7 @@ app.get("/admin-ulasan-laporan/:id_ulasan", (req, res) => {
         la.id_laporan, 
         lu.alasan_ulasan as isiLaporan,
         u.id_ulasan,
+        u.foto,
         COUNT(u.id_ulasan) AS count_laporan
       FROM laporan la
       RIGHT JOIN laporan_ulasan lu ON la.id_laporan = lu.id_laporan
@@ -2446,6 +2482,7 @@ app.get("/admin-ulasan-laporan/:id_ulasan", (req, res) => {
         res.status(404).send("Laporan tidak ditemukan");
         return;
       }
+      
 
       results.forEach(laporan => {
         laporan.tanggal = moment(laporan.tanggal).format("MMMM D, YYYY");

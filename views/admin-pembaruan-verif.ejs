@@ -131,6 +131,16 @@
                       <% }) %>
                     </p>
                   <% } %>
+                  <% if (lapak.foto_base64_pembaruan) { %>
+                    <p><strong>Foto Lapak:</strong></p>
+                    <div class="foto-container">
+                      <img 
+                        src="<%= lapak.foto_base64_pembaruan %>" 
+                        alt="Foto Lapak Pembaruan" 
+                        class="lapak-photo"
+                      >
+                    </div>
+                  <% } %>
                 </div>
                 
 

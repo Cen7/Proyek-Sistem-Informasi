@@ -47,6 +47,18 @@
             <h3 class="garis">Lokasi</h3>
             <p><strong>Lokasi Lapak</strong></p>
             <p><%= lapak.lokasi_lapak %></p>
+            <h3 class="garis">Layanan</h3>
+                <p>
+                  <%= lapak.layanan %>
+                </p>
+
+                <h3 class="garis">Foto Lapak</h3>
+                <% if (lapak.foto_lapak) { %>
+                  <img src="data:image/jpeg;base64,<%= lapak.foto_lapak.toString('base64') %>" alt="Foto Lapak"
+                    class="lapak-photo">
+                  <% } else { %>
+                    <p class="no-photo">Foto tidak tersedia</p>
+                    <% } %>
              </div>
           <div class="mid-column">
             <h3 class="garis">Laporan</h3>

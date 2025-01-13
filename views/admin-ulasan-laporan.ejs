@@ -19,24 +19,25 @@
           <button class="back-button" onclick="location.href='/admin-ulasan'">Kembali</button>
         </div>
         <h2>Deskripsi Ulasan</h2>
-        <p><strong>Nama Pemberi Ulasan:</strong>
-          <%= laporanList[0]?.reviewer %>
-        </p>
-        <p><strong>Ulasan:</strong>
-          <%= laporanList[0]?.deskripsi %>
-        </p>
-        <p><strong>Rating:</strong>
-          <%= laporanList[0]?.rating %>
-        </p>
-        <p><strong>Nama Lapak:</strong>
-          <%= laporanList[0]?.nama_lapak %>
-        </p>
-        <p><strong>Alamat Lapak:</strong>
-          <%= laporanList[0]?.lokasi_lapak %>
-        </p>
-        <p><strong>Tanggal Ulasan:</strong>
-          <%= laporanList[0]?.tanggal %>
-        </p>
+        <div class="content-wrapper">
+          <div class="info-column">
+            <p><strong>Nama Pemberi Ulasan:</strong> <%= laporanList[0]?.reviewer %></p>
+            <p><strong>Ulasan:</strong> <%= laporanList[0]?.deskripsi %></p>
+            <p><strong>Rating:</strong> <%= laporanList[0]?.rating %></p>
+            <p><strong>Nama Lapak:</strong> <%= laporanList[0]?.nama_lapak %></p>
+            <p><strong>Alamat Lapak:</strong> <%= laporanList[0]?.lokasi_lapak %></p>
+            <p><strong>Tanggal Ulasan:</strong> <%= laporanList[0]?.tanggal %></p>
+          </div>
+          
+          <div class="photo-column">
+            <h3 class="garis">Foto Ulasan</h3>
+            <% if (laporanList[0]?.foto) { %>
+              <img src="data:image/jpeg;base64,<%= laporanList[0]?.foto.toString('base64') %>" alt="Foto Lapak" class="lapak-photo">
+            <% } else { %>
+              <p class="no-photo">Foto tidak tersedia</p>
+            <% } %>
+          </div>
+        </div>
         <p><strong>Total Laporan:</strong>
           <%= laporanList.length %> <button class="delete-button"
               onclick="deleteUlasan('<%= laporanList[0]?.id_ulasan %>')">
